@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+        <title>BioPulse – Real-time biomechanical intelligence</title>
+        <meta name="description" content="BioPulse is a biomechanical signal platform that turns muscle acoustics, motion, and morphology into a live muscle map for clinics, athletes, robotics, gaming, and research."/>
+        <link rel="canonical" href="https://biopulse.ai/"/>
+        <!-- Global styles -->
+        <link rel="stylesheet" href="/styles/global.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"/>
+        <meta name="theme-color" content="#000000"/>
+        <!-- Page-local micro-interactions + overrides -->
+        <style>:root { --bp-accent: #3ac7ff; } /* -------------------------------------------------
+         GLOBAL OVERRIDES – black/white/grey base
+         ------------------------------------------------- */body { background: #000000; color: #f9fafb; } .bp-page, .bp-hero, .bp-section, .bp-constellation-wrap, .bp-footer, .bp-header { background: #000000; color: #f9fafb; } /* soften any old page glow to neutral greys */.bp-page::before { content: ""; position: absolute; inset: -20%; pointer-events: none; background: radial-gradient(
+            circle at 10% 0%,
+            rgba(148, 163, 184, 0.12),
+            transparent 55%
+          ),
+          radial-gradient(
+            circle at 90% 100%,
+            rgba(148, 163, 184, 0.08),
+            transparent 60%
+          ); opacity: 0.5; mix-blend-mode: soft-light; animation: none; } .bp-constellation { background-image: radial-gradient(
+            circle at 10% 20%,
+            rgba(148, 163, 184, 0.22) 0,
+            transparent 55%
+          ),
+          radial-gradient(
+            circle at 80% 70%,
+            rgba(107, 114, 128, 0.22) 0,
+            transparent 55%
+          ),
+          radial-gradient(
+            circle at 30% 80%,
+            rgba(75, 85, 99, 0.18) 0,
+            transparent 55%
+          ); opacity: 0.45; } /* -------------------------------------------------
+         TOP TYPED BAND – "BioPulse" + complex wave
+         ------------------------------------------------- */.bp-hero-typeband { position: relative; overflow: hidden; background: #000000; border-bottom: 1px solid rgba(148, 163, 184, 0.35); } .bp-hero-typeband-inner { max-width: 1120px; margin: 0 auto; padding: 72px 20px 64px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; position: relative; z-index: 2;  /* above wave */ } .bp-hero-typeband-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(156, 163, 175, 0.9); } .bp-hero-typing-title { font-size: 46px; line-height: 1.05; font-weight: 600; color: #f9fafb; } .bp-hero-typing { position: relative; display: inline-block; min-width: 1ch; white-space: nowrap; } .bp-hero-typing::after { content: "|"; margin-left: 4px; display: inline-block; color: var(--bp-accent); animation: bp-caret-blink 1s steps(1, start) infinite; } .bp-hero-typeband-subtitle { margin-top: 4px; font-size: 14px; max-width: 540px; color: rgba(209, 213, 219, 0.9); } /* wave container */.bp-hero-typeband-wave-svg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0.75; z-index: 1; } .bp-hero-typeband-wave-svg svg { width: min(1200px, 100%); height: 260px; } /* keep shape in place, make it "breathe" */.bp-wave-layer { transform-origin: 50% 50%; } .bp-wave-layer.layer-1 { animation: bp-wave-breathe-1 14s ease-in-out infinite; } .bp-wave-layer.layer-2 { opacity: 0.8; animation: bp-wave-breathe-2 11s ease-in-out infinite; } .bp-wave-layer.layer-3 { opacity: 0.7; animation: bp-wave-breathe-3 8s ease-in-out infinite; } @keyframes bp-wave-breathe-1 { 0% {  transform: translateY(0) scaleY(1); }  50% {  transform: translateY(-4px) scaleY(1.03); }  100% {  transform: translateY(0) scaleY(1); } } @keyframes bp-wave-breathe-2 { 0% {  transform: translateY(1px) scaleY(1.01); }  50% {  transform: translateY(-6px) scaleY(1.06); }  100% {  transform: translateY(1px) scaleY(1.01); } } @keyframes bp-wave-breathe-3 { 0% {  transform: translateY(0) scaleY(1); }  25% {  transform: translateY(-5px) scaleY(1.05); }  50% {  transform: translateY(-2px) scaleY(1.02); }  75% {  transform: translateY(-7px) scaleY(1.07); }  100% {  transform: translateY(0) scaleY(1); } } @keyframes bp-caret-blink { 0%, 50% {  opacity: 1; }  50.01%, 100% {  opacity: 0; } } @media (max-width: 900px) { .bp-hero-typeband-inner {  padding: 56px 16px 48px; }  .bp-hero-typing-title {  font-size: 34px; }  .bp-hero-typeband-wave-svg svg {  height: 200px; } } /* -------------------------------------------------
+         HERO BODYWAVE – human made of scan lines
+         ------------------------------------------------- */.bp-hero-visual { display: flex; align-items: center; justify-content: center; } .bp-hero-bodywave { position: relative; width: 280px; height: 340px; border-radius: 24px; background: linear-gradient(145deg, #000000, #050505); border: 1px solid rgba(148, 163, 184, 0.7); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.95),
+          0 0 32px rgba(15, 23, 42, 0.9); overflow: hidden; } .bp-bodywave-glow { position: absolute; inset: 18px; border-radius: 999px; background: radial-gradient(
+          ellipse at 50% 18%,
+          rgba(249, 250, 251, 0.12),
+          transparent 70%
+        ); opacity: 0.75; } .bp-bodywave-figure { position: absolute; inset: 18px; display: flex; align-items: center; justify-content: center; isolation: isolate; } .bp-bodywave-silhouette { position: absolute; inset: 0; margin: auto; width: 70%; height: 92%; border-radius: 999px; background: radial-gradient(
+          ellipse at 50% 0%,
+          rgba(0, 0, 0, 0),
+          rgba(0, 0, 0, 0.9) 55%
+        ); opacity: 0.9; } .bp-bodywave-spectrum { position: absolute; inset: 8% 6%; background-image: repeating-linear-gradient(
+          to bottom,
+          rgba(249, 250, 251, 0.04) 0,
+          rgba(249, 250, 251, 0.16) 1px,
+          transparent 6px
+        ); mix-blend-mode: screen; mask-image: radial-gradient(
+          ellipse at 50% 35%,
+          #ffffff 0,
+          #ffffff 35%,
+          transparent 80%
+        ); -webkit-mask-image: radial-gradient(
+          ellipse at 50% 35%,
+          #ffffff 0,
+          #ffffff 35%,
+          transparent 80%
+        ); animation: bp-bodywave-scroll 7s linear infinite; } .bp-bodywave-spectrum::after { content: ""; position: absolute; left: -20%; right: -20%; top: 46%; height: 3px; background: linear-gradient(
+          90deg,
+          transparent,
+          var(--bp-accent),
+          transparent
+        ); box-shadow: 0 0 18px rgba(58, 199, 255, 0.9); opacity: 0.9; animation: bp-bodywave-pulse 2.8s ease-in-out infinite; } .bp-bodywave-head { position: absolute; top: 10%; left: 50%; width: 56px; height: 56px; transform: translateX(-50%); border-radius: 50%; border: 1px solid rgba(249, 250, 251, 0.65); box-shadow: 0 0 24px rgba(58, 199, 255, 0.65),
+          inset 0 0 18px rgba(0, 0, 0, 0.95); background: radial-gradient(
+          circle at 35% 30%,
+          rgba(249, 250, 251, 0.4),
+          transparent 55%
+        ); } .bp-bodywave-signals { position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; } .bp-bodywave-signal-bar { width: 4px; border-radius: 999px; background: linear-gradient(
+          to top,
+          rgba(58, 199, 255, 0.08),
+          var(--bp-accent)
+        ); animation: bp-bodywave-bar 1.6s ease-in-out infinite; } .bp-bodywave-signal-bar:nth-child(1) { height: 24px; animation-delay: -0.1s; } .bp-bodywave-signal-bar:nth-child(2) { height: 32px; animation-delay: -0.4s; } .bp-bodywave-signal-bar:nth-child(3) { height: 40px; animation-delay: -0.2s; } .bp-bodywave-signal-bar:nth-child(4) { height: 30px; animation-delay: -0.5s; } @keyframes bp-bodywave-scroll { 0% {  background-position-y: 0; }  100% {  background-position-y: 40px; } } @keyframes bp-bodywave-pulse { 0%, 100% {  opacity: 0.4;  transform: translateY(0); }  50% {  opacity: 1;  transform: translateY(-3px); } } @keyframes bp-bodywave-bar { 0%, 100% {  transform: scaleY(0.8);  opacity: 0.6; }  50% {  transform: scaleY(1.15);  opacity: 1; } } @media (max-width: 900px) { .bp-hero-bodywave {  width: 240px;  height: 300px; } } /* -------------------------------------------------
+         CTA band
+         ------------------------------------------------- */.bp-cta-band { text-align: center; display: flex; justify-content: center; align-items: center; padding: 80px 20px; background: #050505; border-top: 1px solid rgba(148, 163, 184, 0.4); } .bp-cta-band .bp-container { max-width: 720px; margin: 0 auto; } /* -------------------------------------------------
+         Cards & metrics hover
+         ------------------------------------------------- */.bp-card, .bp-card-metric { transition: transform 220ms ease-out,
+          box-shadow 220ms ease-out,
+          border-color 220ms ease-out,
+          background 220ms ease-out; } .bp-card:hover, .bp-card-metric:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9),
+          0 0 24px rgba(58, 199, 255, 0.3); border-color: var(--bp-accent) !important; } /* -------------------------------------------------
+         Buttons
+         ------------------------------------------------- */.bp-btn-primary { position: relative; overflow: hidden; transition: transform 120ms ease-out,
+          box-shadow 180ms ease-out; background: #ffffff; color: #020202; border-color: #e5e7eb; } .bp-btn-primary::after { content: ""; position: absolute; inset: 0; background: radial-gradient(
+          circle at 0% 0%,
+          rgba(58, 199, 255, 0.25),
+          transparent 55%
+        ); opacity: 0; pointer-events: none; transition: opacity 200ms ease-out,
+          transform 200ms ease-out; transform: translate3d(-30%, -30%, 0); } .bp-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 0 24px rgba(58, 199, 255, 0.45),
+          0 0 48px rgba(0, 0, 0, 0.75); } .bp-btn-primary:hover::after { opacity: 1; transform: translate3d(-10%, -20%, 0); } .bp-btn-secondary { background: #000000; color: #e5e7eb; border-color: #4b5563; } .bp-btn-secondary:hover { border-color: var(--bp-accent); box-shadow: 0 0 18px rgba(58, 199, 255, 0.35); } /* -------------------------------------------------
+         Pills
+         ------------------------------------------------- */.bp-pill { transition: background 160ms ease-out,
+          border-color 160ms ease-out,
+          color 160ms ease-out,
+          transform 160ms ease-out; background: #000000; border-color: #4b5563; color: #f9fafb; } .bp-pill:hover { transform: translateY(-1px); background: #050505; border-color: var(--bp-accent); color: #f9fafb; } /* -------------------------------------------------
+         Muscle map panel
+         ------------------------------------------------- */.bp-muscle-map { position: relative; border-radius: 24px; padding: 20px 20px 18px; background: radial-gradient(
+          circle at top,
+          #111111 0,
+          #050505 55%,
+          #000000 100%
+        ); border: 1px solid rgba(148, 163, 184, 0.6); box-shadow: 0 0 32px rgba(0, 0, 0, 0.9),
+          inset 0 0 20px rgba(0, 0, 0, 0.9); } .bp-muscle-bar-fill { position: relative; overflow: hidden; background: linear-gradient(
+          90deg,
+          rgba(82, 82, 82, 0.7),
+          rgba(249, 250, 251, 0.98)
+        ); } .bp-muscle-bar-fill::after { content: ""; position: absolute; top: 0; bottom: 0; width: 40%; left: -40%; background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(250, 250, 255, 0.6),
+          transparent
+        ); opacity: 0; pointer-events: none; } .bp-muscle-map:hover .bp-muscle-bar-fill::after { animation: bp-muscle-shimmer 900ms ease-in-out; opacity: 1; } @keyframes bp-muscle-shimmer { 0% {  transform: translateX(0); }  100% {  transform: translateX(160%); } } /* -------------------------------------------------
+         Intro curtain fade helper
+         ------------------------------------------------- */.bp-intro { transition: opacity 600ms ease-out,
+          visibility 600ms ease-out; } .bp-intro.bp-intro--hidden { opacity: 0; visibility: hidden; pointer-events: none; }</style>
+    </head>
+    <body>
+        <!-- INTRO CURTAIN – neural mesh + DNA helix -->
+        <div class="bp-intro">
+            <div class="bp-intro-mesh"></div>
+            <div class="bp-intro-core">
+                <div class="bp-intro-dna">
+                    <div class="bp-dna-strand bp-dna-strand-left"></div>
+                    <div class="bp-dna-strand bp-dna-strand-right"></div>
+                    <div class="bp-dna-rungs"></div>
+                </div>
+                <div class="bp-intro-logo">
+                    <span class="bp-intro-label">BioPulse</span>
+                    <span class="bp-intro-sub"></span>
+                </div>
+            </div>
+            <div class="bp-intro-panel bp-intro-panel-left"></div>
+            <div class="bp-intro-panel bp-intro-panel-right"></div>
+        </div>
+        <!-- HEADER (loaded dynamically) -->
+        <div id="bp-header"></div>
+        <main class="bp-page">
+            <!-- NEW TOP TYPE BAND HERO -->
+            <section class="bp-hero-typeband">
+                <div class="bp-hero-typeband-wave-svg" aria-hidden="true">
+                    <canvas id="bp-hero-wave"></canvas>
+                </div>
+                <div class="bp-hero-typeband-inner">
+                    <div class="bp-hero-typeband-label">Biomechanical signal layer</div>
+                    <div class="bp-hero-typing-title">
+                        <span id="bp-type-text" class="bp-hero-typing" data-text="BioPulse"></span>
+                    </div>
+                    <div class="bp-hero-typeband-subtitle">
+                        A calm AI layer listening to the mechanics of movement, not just the
+                        surface.
+</div>
+                </div>
+            </section>
+            <!-- MAIN HERO -->
+            <section class="bp-hero" id="top">
+                <div class="bp-container bp-hero-grid">
+                    <!-- LEFT: COPY -->
+                    <div data-aos="fade-right">
+                        <div class="bp-label">Biomechanical signal infrastructure</div>
+                        <div class="bp-hero-title-wrap">
+                            <h1 class="bp-heading-xl" style="margin: 12px 0 12px;">
+      Real-time muscle intelligence<br/>
+      for humans, robots, and digital systems. </h1>
+                        </div>
+                        <p class="bp-body" style="max-width: 540px;">
+    BioPulse captures the acoustic, mechanical, and structural behavior of muscle
+    tissue through a high-resolution wearable nano-sensor array. These signals
+    are fused into a continuously updating biomechanical model that represents
+    how force is generated, transferred, and adapted in real time. </p>
+                        <p class="bp-body" style="max-width: 540px; margin-top: 12px;">
+    This unified signal layer enables precise clinical assessment, advanced
+    performance analysis, adaptive robotic control, motion research, and
+    next-generation simulation environments — all powered by a single,
+    extensible biomechanical architecture. </p>
+                        <div class="bp-hero-actions">
+</div>
+                        <div class="bp-hero-tags" style="
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  "><span class="bp-pill">Clinical &amp; Rehabilitation</span><span class="bp-pill">Performance Science</span><span class="bp-pill">Soft Robotics</span><span class="bp-pill">Simulation &amp; Digital Twins</span>
+                        </div>
+                    </div>
+                    <!-- RIGHT: BODY MADE OF SOUND LINES -->
+                </div>
+            </section>
+            <!-- METRICS / OVERVIEW -->
+            <section class="bp-section bp-constellation-wrap" id="overview">
+                <div class="bp-constellation" aria-hidden="true"></div>
+                <div class="bp-container bp-grid bp-metrics-grid" data-aos="fade-up">
+                    <div class="bp-card bp-card-metric bp-float-panel" data-float="1" style="
+      background: linear-gradient(145deg, #000000, #111111);
+      border-color: rgba(148, 163, 184, 0.7);
+    ">
+                        <div class="bp-metric-label">Signal bandwidth</div>
+                        <div class="bp-metric-value" style="color: #f9fafb;">10–100 Hz</div>
+                        <div class="bp-metric-sub">
+                            Muscle acoustics, joint loading, and impact signatures captured
+                            with high temporal precision.
+</div>
+                    </div>
+                    <div class="bp-card bp-card-metric bp-float-panel" data-float="2" style="
+      background: linear-gradient(145deg, #000000, #141414);
+      border-color: var(--bp-accent);
+    ">
+                        <div class="bp-metric-label">Sensors fused</div>
+                        <div class="bp-metric-value" style="color: #e5e7eb;">4+</div>
+                        <div class="bp-metric-sub">
+                            PVDF nano-arrays, IMUs, ultrasound, and motion channels combined
+                            into a synchronized biomechanical model.
+</div>
+                    </div>
+                    <div class="bp-card bp-card-metric bp-float-panel" data-float="3" style="
+      background: linear-gradient(145deg, #000000, #111111);
+      border-color: rgba(75, 85, 99, 0.9);
+    ">
+                        <div class="bp-metric-label">Domains served</div>
+                        <div class="bp-metric-value" style="color: #f9fafb;">6</div>
+                        <div class="bp-metric-sub">
+                            Healthcare, performance training, robotics, game engines,
+                            research, and general movement analysis share one data foundation.
+</div>
+                    </div>
+                </div>
+            </section>
+            <!-- HOW IT WORKS – MUSCLE MAP -->
+            <section class="bp-section bp-how" id="how-it-works">
+                <div class="bp-container bp-split">
+                    <!-- LEFT: copy -->
+                    <div class="bp-split-content" data-aos="fade-right">
+                        <div class="bp-label">Signal architecture</div>
+                        <h2 class="bp-heading-lg">
+        From raw movement to a live, interpretable muscle map. </h2>
+                        <p class="bp-body">
+        BioPulse doesn’t “track motion” — it measures the internal mechanics that create it.
+        PVDF nano-films capture micro-acoustic muscle signatures, IMUs resolve joint dynamics,
+        and ultrasound extracts structural behavior. These synchronized channels are fused into
+        a continuously updating biomechanical field. </p>
+                        <p class="bp-body" style="margin-top: 12px;">
+        The result is a real-time muscle map you can stream into dashboards, digital twins,
+        robotics controllers, and simulation engines. One signal layer — adapted across
+        rehab, performance, autonomy, and synthetic motion. </p>
+                        <!-- MINI PIPELINE STRIP -->
+                        <div class="bp-pipeline" data-aos="fade-up" data-aos-delay="150">
+                            <div class="bp-pipeline-node"><span class="bp-pill bp-pill-quiet">PVDF</span><span class="bp-pipeline-label">Acoustics</span>
+                            </div>
+                            <div class="bp-pipeline-arrow" aria-hidden="true"></div>
+                            <div class="bp-pipeline-node"><span class="bp-pill bp-pill-quiet">IMU</span><span class="bp-pipeline-label">Kinematics</span>
+                            </div>
+                            <div class="bp-pipeline-arrow" aria-hidden="true"></div>
+                            <div class="bp-pipeline-node"><span class="bp-pill bp-pill-quiet">Ultrasound</span><span class="bp-pipeline-label">Structure</span>
+                            </div>
+                            <div class="bp-pipeline-arrow" aria-hidden="true"></div>
+                            <div class="bp-pipeline-node bp-pipeline-node-strong"><span class="bp-pill">Fusion</span><span class="bp-pipeline-label">Muscle Map</span>
+                            </div>
+                        </div>
+                        <button class="bp-btn bp-btn-primary" style="margin-top: 20px;">
+                            See the signal pipeline
+</button>
+                    </div>
+                    <!-- RIGHT: visual -->
+                    <div class="bp-split-visual" data-aos="fade-left">
+                        <div class="bp-muscle-map bp-float-panel bp-muscle-map-anim">
+                            <div class="bp-muscle-map-header"><span class="bp-pill bp-pill-quiet">Live capture</span><span class="bp-muscle-map-timestamp">
+      Frame <span class="bp-frame">214</span> • <span class="bp-hz">120</span> Hz </span>
+                            </div>
+                            <div class="bp-muscle-map-body">
+                                <!-- Left: muscle list + load bars -->
+                                <div class="bp-muscle-map-metrics">
+                                    <div class="bp-muscle-row"><span class="bp-muscle-name">Hamstrings</span>
+                                        <div class="bp-muscle-bar"><span class="bp-muscle-bar-fill" data-base="82" style="width:82%"></span>
+                                        </div><span class="bp-muscle-value"><span class="bp-val">82</span>%</span>
+                                    </div>
+                                    <div class="bp-muscle-row"><span class="bp-muscle-name">Quads</span>
+                                        <div class="bp-muscle-bar"><span class="bp-muscle-bar-fill" data-base="64" style="width:64%"></span>
+                                        </div><span class="bp-muscle-value"><span class="bp-val">64</span>%</span>
+                                    </div>
+                                    <div class="bp-muscle-row"><span class="bp-muscle-name">Glutes</span>
+                                        <div class="bp-muscle-bar"><span class="bp-muscle-bar-fill" data-base="71" style="width:71%"></span>
+                                        </div><span class="bp-muscle-value"><span class="bp-val">71</span>%</span>
+                                    </div>
+                                    <div class="bp-muscle-row"><span class="bp-muscle-name">Calf complex</span>
+                                        <div class="bp-muscle-bar"><span class="bp-muscle-bar-fill" data-base="48" style="width:48%"></span>
+                                        </div><span class="bp-muscle-value"><span class="bp-val">48</span>%</span>
+                                    </div>
+                                </div>
+                                <!-- Right: silhouette with glowing bands -->
+                                <div class="bp-muscle-map-figure" aria-hidden="true">
+                                    <div class="bp-muscle-figure-core"></div>
+                                    <div class="bp-muscle-figure-limb bp-muscle-figure-limb-left"></div>
+                                    <div class="bp-muscle-figure-limb bp-muscle-figure-limb-right"></div>
+                                    <div class="bp-muscle-band bp-muscle-band-quad"></div>
+                                    <div class="bp-muscle-band bp-muscle-band-ham"></div>
+                                    <div class="bp-muscle-band bp-muscle-band-calf"></div>
+                                    <!-- Ambient overlays -->
+                                    <div class="bp-muscle-scanline"></div>
+                                    <div class="bp-muscle-halo"></div>
+                                </div>
+                            </div>
+                            <div class="bp-muscle-map-footer"><span class="bp-muscle-tag">Asymmetry: <span class="bp-asym">11</span>% L/R</span><span class="bp-muscle-tag">Impact window: <span class="bp-impact">32</span> ms</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- APPLICATIONS -->
+            <section class="bp-section bp-constellation-wrap" id="applications">
+                <div class="bp-constellation"></div>
+                <div class="bp-container">
+                    <div class="bp-label">Where BioPulse integrates</div>
+                    <h2 class="bp-heading-lg" style="margin: 12px 0 36px;">
+      A single biomechanical layer<br/>
+      extending across disciplines. </h2>
+                    <div class="bp-grid bp-app-grid" data-aos="fade-up">
+                        <div class="bp-card bp-float-panel bp-app-card">
+                            <h3 class="bp-heading-md">Clinics &amp; rehabilitation</h3>
+                            <p class="bp-body">
+          Replace guesswork with continuous biomechanical signal. Track how
+          individual muscles distribute load during gait, lifts, and daily
+          movement. Identify compensation patterns, recovery trajectories, and
+          neuromuscular change with clinical-grade clarity. </p>
+                        </div>
+                        <div class="bp-card bp-float-panel bp-app-card bp-app-card-accent">
+                            <h3 class="bp-heading-md">Athletes &amp; performance</h3>
+                            <p class="bp-body">
+          See which muscles generate acceleration, stability, and power under
+          fatigue. Optimize technique, manage training load intelligently, and
+          monitor readiness using internal biomechanical signals — not just
+          surface metrics or perception. </p>
+                        </div>
+                        <div class="bp-card bp-float-panel bp-app-card">
+                            <h3 class="bp-heading-md">Robotics, gaming &amp; research</h3>
+                            <p class="bp-body">
+          Export human movement as biomechanical data. Train soft robotics,
+          calibrate physics engines, build realistic motion systems, or analyze
+          injury mechanisms frame-by-frame without reverse-engineering from
+          static motion capture. </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- TESTIMONIAL -->
+            <section class="bp-section" id="insight">
+                <div class="bp-container">
+                    <div class="bp-card bp-float-panel bp-quote-card" data-aos="fade-up">
+                        <div class="bp-quote-mark" aria-hidden="true">“</div>
+                        <p class="bp-quote">We&rsquo;ve spent years inferring movement from external markers.
+        BioPulse gives us access to the internal mechanics.Tthe actual behavior
+        of muscle under load.</p>
+                        <div class="bp-quote-meta"><span class="bp-quote-name">Biomechanics Research Lead</span><span class="bp-quote-divider" aria-hidden="true"></span><span class="bp-quote-org">Field lab collaborator</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- CTA BAND -->
+            <section class="bp-cta-band" id="contact">
+                <div class="bp-container bp-cta-inner">
+                    <div class="bp-label">BioPulse HQ</div>
+                    <h2 class="bp-heading-lg" style="margin: 12px 0 14px;">
+      This is the BioPulse HQ. </h2>
+                    <p class="bp-body bp-cta-copy">
+      BioPulse is shared biomechanical infrastructure for clinicians, engineers,
+      researchers, and simulation builders. If you’re developing rehabilitation
+      tools, robotic systems, performance tech, or virtual environments — BioPulse
+      provides the signal layer that ties it all together. </p>
+                    <div class="bp-cta-actions">
+                        <button class="bp-btn bp-btn-primary">Talk to the team</button>
+                        <button class="bp-btn bp-btn-secondary">Request a demo</button>
+                    </div>
+                    <div class="bp-cta-meta"><span class="bp-pill">Clinical</span><span class="bp-pill">Robotics</span><span class="bp-pill">Performance</span><span class="bp-pill">Simulation</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- Global toast -->
+        <div class="bp-toast"></div>
+        <!-- FOOTER (loaded dynamically) -->
+        <div id="bp-footer"></div>
+        <!-- Scripts at the end for faster paint -->
+        <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+        <script src="/scripts/global.js"></script>
+        <script>
+  // Simple fragment loader for header/footer
+  function bpLoadFragment(targetSelector, url) {
+    var host = document.querySelector(targetSelector);
+    if (!host) return;
+
+    fetch(url, { cache: "no-cache" })
+      .then(function (res) {
+        return res.text();
+      })
+      .then(function (html) {
+        host.innerHTML = html;
+      })
+      .catch(function (err) {
+        console.error("Fragment load failed:", url, err);
+      });
+  }
+
+  // BioPulse typewriter
+  function initTypewriter() {
+    var el = document.getElementById("bp-type-text");
+    if (!el) return;
+    var text = el.getAttribute("data-text") || "BioPulse";
+    var i = 0;
+
+    function step() {
+      if (i <= text.length) {
+        el.textContent = text.slice(0, i);
+        i++;
+        setTimeout(step, 140);
+      }
+    }
+    step();
+  }
+
+  // Siri-style hero wave
+ function initHeroWave() {
+  var canvas = document.getElementById("bp-hero-wave");
+  if (!canvas) return;
+
+  var ctx = canvas.getContext("2d");
+  var dpr = window.devicePixelRatio || 1;
+  var width, height, centerY;
+
+  function resize() {
+    var cssWidth = canvas.clientWidth || 1200;
+    var cssHeight = canvas.clientHeight || 220;
+
+    canvas.width = cssWidth * dpr;
+    canvas.height = cssHeight * dpr;
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    width = cssWidth;
+    height = cssHeight;
+    centerY = height / 2;
+  }
+
+  resize();
+  window.addEventListener("resize", resize);
+
+  var t = 0;
+
+  function draw() {
+    t += 0.02;
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.globalCompositeOperation = "lighter";
+
+    var lines = 14; // dense mesh
+
+    // Slow "breathing" factor for amplitude
+    var breathFactor = 1 + 0.16 * Math.sin(t * 0.35); // slow inhale/exhale
+
+    for (var i = 0; i < lines; i++) {
+      var progress = i / (lines - 1); // 0..1
+      var opacity = 0.12 + progress * 0.14;
+      var thickness = 0.6 + progress * 0.45;
+      var freq = 10 + progress * 4;
+      var phase = t * (1.2 + progress * 0.6);
+      var baseAmp = 60 + progress * 40; // tall
+      var amp = baseAmp * breathFactor; // breathing
+
+      ctx.beginPath();
+      for (var x = 0; x <= width; x += 4) {
+        var u = x / width; // 0..1
+
+        // Gaussian envelope to keep energy centered
+        var envelope = Math.exp(-Math.pow(u - 0.5, 2) / 0.024);
+
+        var y =
+          centerY +
+          Math.sin(u * freq * Math.PI * 2 + phase) *
+            amp *
+            envelope;
+
+        // Smooth micro-perturbations (not random per-frame)
+        var micro =
+          Math.sin(u * 80 * Math.PI * 2 + t * 3 + i * 0.7) *
+          3 *
+          envelope;
+        y += micro;
+
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+
+      ctx.strokeStyle =
+        "rgba(249, 250, 251," + opacity.toFixed(3) + ")";
+      ctx.lineWidth = thickness;
+      ctx.stroke();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  requestAnimationFrame(draw);
+}
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Load header/footer
+    bpLoadFragment("#bp-header", "/components/header.html");
+    bpLoadFragment("#bp-footer", "/components/footer.html");
+
+    // Init AOS
+    if (window.AOS) {
+      AOS.init({ duration: 800, once: true });
+    }
+
+    // Hooks from global.js if present
+    if (typeof initMobileMenu === "function") initMobileMenu();
+    if (typeof initAccordions === "function") initAccordions();
+    if (typeof initTabs === "function") initTabs();
+    if (typeof initForms === "function") initForms();
+
+    if (window.gsap) {
+      if (typeof initOrbAnimation === "function") initOrbAnimation();
+      if (typeof initOrbParallax === "function") initOrbParallax();
+    }
+
+    // Intro fade
+    var intro = document.querySelector(".bp-intro");
+    if (intro) {
+      setTimeout(function () {
+        intro.classList.add("bp-intro--hidden");
+      }, 4000);
+    }
+
+    // Typewriter + Siri-like wave
+    initTypewriter();
+    initHeroWave();
+  });
+</script>
+    </body>
+</html>

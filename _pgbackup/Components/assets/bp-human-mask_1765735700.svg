@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="280" height="320" viewBox="0 0 280 320" xmlns="http://www.w3.org/2000/svg">
+  <!-- Black background (outside the mask = fully transparent) -->
+  <rect x="0" y="0" width="280" height="320" fill="black"/>
+
+  <!-- Head (circle) -->
+  <circle cx="140" cy="82" r="56" fill="white"/>
+
+  <!-- Neck -->
+  <rect x="118" y="128" width="44" height="34" rx="12" fill="white"/>
+
+  <!-- Shoulders / upper torso (rounded shape) -->
+  <path
+    d="
+      M 60 196
+      Q 80 150 140 150
+      Q 200 150 220 196
+      L 220 260
+      Q 220 290 60 290
+      Z
+    "
+    fill="white"
+  />
+</svg>
