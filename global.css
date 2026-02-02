@@ -1521,50 +1521,70 @@ html, body {
   max-width: 1360px; /* try 1280px or 1440px if you want */
 }
 /* ======================================================
-   FOOTER — CENTERED, BALANCED LAYOUT
+   FOOTER LAYOUT FIX — remove "space-between" dead zone
    ====================================================== */
 
-.bp-footer-centered {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.bp-footer-inner {
-  padding: 48px 0 32px;
-  gap: 32px;
-}
-
-.bp-footer-brand {
-  max-width: 420px;
-}
-
-.bp-footer-copy {
-  margin-top: 12px;
-}
-
-.bp-footer-links {
+.bp-footer-grid{
+  /* 2-column layout: brand + links */
   display: grid;
-  grid-template-columns: repeat(3, minmax(140px, 1fr));
-  gap: 40px;
-  justify-content: center;
+  grid-template-columns: minmax(280px, 420px) 1fr;
+  gap: 72px;
+
+  /* vertical spacing only; container handles horizontal */
+  padding: 52px 0 34px;
+  align-items: start;
 }
 
-.bp-footer-col {
-  text-align: center;
+.bp-footer-brand{
+  text-align: left;
 }
 
-.bp-footer-bottom-inner {
-  padding: 12px 0 16px;
+.bp-footer-copy{
+  margin: 12px 0 0;
+  max-width: 42ch;
+}
+
+/* Links become a 3-column grid (not a right-aligned stack) */
+.bp-footer-links-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  gap: 48px;
+  justify-items: start;
+  align-items: start;
+}
+
+/* Ensure columns are left-aligned */
+.bp-footer-col{
+  text-align: left;
+}
+
+/* Bottom bar: spread left/right but within same centered container */
+.bp-footer-bottom-grid{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 12px;
+
+  /* vertical only */
+  padding: 12px 0 16px;
 }
 
-/* Mobile */
-@media (max-width: 900px) {
-  .bp-footer-links {
+/* Mobile: stack cleanly */
+@media (max-width: 900px){
+  .bp-footer-grid{
     grid-template-columns: 1fr;
-    gap: 22px;
+    gap: 26px;
+    padding: 34px 0 22px;
+  }
+
+  .bp-footer-links-grid{
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .bp-footer-bottom-grid{
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
