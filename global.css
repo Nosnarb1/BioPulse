@@ -318,12 +318,17 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   z-index: 2;
   text-align: center;
+
+  max-width: 1360px;   /* match .bp-container */
+  margin: 0 auto;
+
   padding: 84px 20px 72px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
 }
+
 
 @media (max-width: 900px) {
   #bp-hero-wave { width: 200%; height: 300px; }
@@ -1507,3 +1512,12 @@ a { color: inherit; text-decoration: none; }
 html, body {
   overflow-x: hidden;
 }
+/* ======================================================
+   WIDER LAYOUT — reduce empty side space
+   Paste at VERY BOTTOM of global.css
+   ====================================================== */
+
+.bp-container {
+  max-width: 1360px; /* try 1280px or 1440px if you want */
+}
+
