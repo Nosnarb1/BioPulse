@@ -1520,4 +1520,51 @@ html, body {
 .bp-container {
   max-width: 1360px; /* try 1280px or 1440px if you want */
 }
+/* ======================================================
+   FOOTER — CENTERED, BALANCED LAYOUT
+   ====================================================== */
+
+.bp-footer-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.bp-footer-inner {
+  padding: 48px 0 32px;
+  gap: 32px;
+}
+
+.bp-footer-brand {
+  max-width: 420px;
+}
+
+.bp-footer-copy {
+  margin-top: 12px;
+}
+
+.bp-footer-links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(140px, 1fr));
+  gap: 40px;
+  justify-content: center;
+}
+
+.bp-footer-col {
+  text-align: center;
+}
+
+.bp-footer-bottom-inner {
+  padding: 12px 0 16px;
+  gap: 12px;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .bp-footer-links {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}
 
