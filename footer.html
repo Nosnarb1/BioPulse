@@ -1,23 +1,26 @@
 <footer class="bp-footer">
   <div class="bp-container">
-    <div class="bp-footer-inner bp-footer-centered">
-
+    <div class="bp-footer-inner bp-footer-grid">
       <!-- Brand -->
       <div class="bp-footer-brand">
-        <img
-          src="./components/assets/biopulselogo.svg"
-          alt="BioPulse"
-          class="bp-logo bp-logo-footer"
-          width="160"
-          height="36"
-        />
+        <a href="/" aria-label="BioPulse home">
+          <img
+            src="./Components/assets/biopulselogo.svg"
+            alt="BioPulse"
+            class="bp-logo bp-logo-footer"
+            width="160"
+            height="36"
+            loading="lazy"
+          />
+        </a>
+
         <p class="bp-body bp-footer-copy">
-          A calm layer that translates biological signals into clear, actionable guidance.
+          A calm layer that translates your biological signals into clear, actionable guidance.
         </p>
       </div>
 
       <!-- Links -->
-      <div class="bp-footer-links">
+      <nav class="bp-footer-links bp-footer-links-grid" aria-label="Footer">
         <div class="bp-footer-col">
           <div class="bp-label">Product</div>
           <a href="/how-it-works.html" class="bp-footer-link">How it works</a>
@@ -37,14 +40,13 @@
           <a href="/privacy.html" class="bp-footer-link">Privacy</a>
           <a href="/terms.html" class="bp-footer-link">Terms</a>
         </div>
-      </div>
-
+      </nav>
     </div>
   </div>
 
   <div class="bp-footer-bottom">
     <div class="bp-container">
-      <div class="bp-footer-bottom-inner bp-footer-centered">
+      <div class="bp-footer-bottom-inner bp-footer-bottom-grid">
         <span>© 2026 BioPulse. All rights reserved.</span>
         <span>Built with calm, not chaos.</span>
       </div>
