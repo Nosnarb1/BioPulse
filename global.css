@@ -1611,3 +1611,94 @@ html, body {
     gap: 6px;
   }
 }
+/* ======================================================
+   MOBILE TUNE PACK — make everything feel intentional
+   Paste at VERY BOTTOM of global.css
+   ====================================================== */
+
+@media (max-width: 900px) {
+  /* tighter global rhythm */
+  .bp-section { padding: 56px 0; }          /* was 80px */
+  .bp-container { padding-left: 16px; padding-right: 16px; }
+
+  /* headings: reduce size + tracking (Orbitron needs this) */
+  .bp-heading-xl {
+    font-size: 28px;
+    letter-spacing: 0.12em;
+    line-height: 1.1;
+  }
+  .bp-heading-lg {
+    font-size: 22px;
+    letter-spacing: 0.10em;
+    line-height: 1.15;
+  }
+  .bp-heading-md {
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+  }
+
+  /* body copy: slightly smaller, more readable */
+  .bp-body {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* hero padding tighter */
+  .bp-hero-typeband-inner {
+    padding: 56px 16px 48px;
+  }
+
+  /* buttons: make them thumb-friendly */
+  .bp-btn {
+    padding: 12px 16px;
+    font-size: 11px;
+  }
+
+  /* cards/panels: reduce padding */
+  .bp-card { padding: 16px; }
+
+  /* split sections should always stack cleanly */
+  .bp-split {
+    grid-template-columns: 1fr !important;
+    gap: 26px !important;
+    text-align: center;
+  }
+  .bp-split-content { max-width: 100%; margin: 0 auto; }
+  .bp-split-visual { justify-content: center; }
+
+  /* reduce grid min size so cards don’t look huge */
+  .bp-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  /* pipeline strip: wrap nicely and reduce visual weight */
+  .bp-pipeline {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  .bp-pipeline-label { font-size: 10px; letter-spacing: 0.12em; }
+
+  /* muscle map card: stop it from feeling gigantic */
+  #how-it-works .bp-muscle-map {
+    width: 100%;
+    padding: 14px;
+    border-radius: 18px;
+  }
+  #how-it-works .bp-muscle-row {
+    grid-template-columns: 1fr 1.2fr auto;
+    gap: 10px;
+  }
+}
+
+/* Extra-small phones */
+@media (max-width: 480px) {
+  .bp-heading-xl { font-size: 24px; }
+  .bp-heading-lg { font-size: 20px; }
+  .bp-body { font-size: 13.5px; }
+
+  /* make buttons not wrap awkwardly */
+  .bp-btn { width: 100%; justify-content: center; }
+  .bp-cta-actions { gap: 10px; }
+}
