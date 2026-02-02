@@ -1512,82 +1512,19 @@ html, body {
   overflow-x: hidden;
 }
 /* ======================================================
-   WIDER LAYOUT — reduce empty side space
-   Paste at VERY BOTTOM of global.css
+   GLOBAL CONTAINER WIDTH
    ====================================================== */
 
 .bp-container {
-  max-width: 1360px; /* try 1280px or 1440px if you want */
+  max-width: 1360px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
+
 /* ======================================================
-   FOOTER LAYOUT FIX — remove "space-between" dead zone
-   ====================================================== */
-
-.bp-footer-grid{
-  /* 2-column layout: brand + links */
-  display: grid;
-  grid-template-columns: minmax(280px, 420px) 1fr;
-  gap: 72px;
-
-  /* vertical spacing only; container handles horizontal */
-  padding: 52px 0 34px;
-  align-items: start;
-}
-
-.bp-footer-brand{
-  text-align: left;
-}
-
-.bp-footer-copy{
-  margin: 12px 0 0;
-  max-width: 42ch;
-}
-
-/* Links become a 3-column grid (not a right-aligned stack) */
-.bp-footer-links-grid{
-  display: grid;
-  grid-template-columns: repeat(3, minmax(160px, 1fr));
-  gap: 48px;
-  justify-items: start;
-  align-items: start;
-}
-
-/* Ensure columns are left-aligned */
-.bp-footer-col{
-  text-align: left;
-}
-
-/* Bottom bar: spread left/right but within same centered container */
-.bp-footer-bottom-grid{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-
-  /* vertical only */
-  padding: 12px 0 16px;
-}
-
-/* Mobile: stack cleanly */
-@media (max-width: 900px){
-  .bp-footer-grid{
-    grid-template-columns: 1fr;
-    gap: 26px;
-    padding: 34px 0 22px;
-  }
-
-  .bp-footer-links-grid{
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  .bp-footer-bottom-grid{
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-/* ======================================================
-   FOOTER — FULL BLEED BACKGROUND (NO DEAD ZONES)
+   FOOTER — FULL BLEED, TIGHT, CLEAN
    ====================================================== */
 
 .bp-footer {
@@ -1595,32 +1532,43 @@ html, body {
   width: 100%;
 }
 
-/* Full-width background layer */
+/* Full-width background */
 .bp-footer-bleed {
   width: 100%;
   background: #000;
   border-top: 1px solid rgba(148,163,184,0.18);
 }
 
-/* Main grid */
+/* Main footer layout */
 .bp-footer-grid {
   display: grid;
   grid-template-columns: minmax(280px, 420px) 1fr;
-  gap: 72px;
-  padding: 64px 0 48px;
+  gap: 64px;
+
+  /* 🔧 TIGHTENED vertical space */
+  padding: 40px 0 28px;
+  align-items: start;
 }
 
 /* Brand */
+.bp-footer-brand {
+  text-align: left;
+}
+
 .bp-footer-copy {
   margin-top: 12px;
   max-width: 42ch;
 }
 
-/* Links */
+/* Footer links */
 .bp-footer-links-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(160px, 1fr));
-  gap: 48px;
+  gap: 40px;
+}
+
+.bp-footer-col {
+  text-align: left;
 }
 
 /* Bottom bar */
@@ -1629,26 +1577,32 @@ html, body {
 }
 
 .bp-footer-bottom-inner {
-  padding: 16px 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  /* 🔧 MUCH tighter */
+  padding: 8px 0 10px;
+
   font-size: 11px;
   color: var(--bp-text-subtle);
   border-top: 1px solid rgba(148,163,184,0.18);
 }
 
-/* Mobile */
+/* ======================================================
+   MOBILE
+   ====================================================== */
+
 @media (max-width: 900px) {
   .bp-footer-grid {
     grid-template-columns: 1fr;
-    gap: 28px;
-    padding: 42px 0 32px;
+    gap: 24px;
+    padding: 32px 0 22px;
   }
 
   .bp-footer-links-grid {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 16px;
   }
 
   .bp-footer-bottom-inner {
@@ -1657,4 +1611,3 @@ html, body {
     gap: 6px;
   }
 }
-
