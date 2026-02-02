@@ -1470,4 +1470,41 @@ a { color: inherit; text-decoration: none; }
     animation: none !important;
   }
 }
+/* ======================================================
+   HOT FIX — ALIGN HEADER/FOOTER WITH .bp-container
+   Paste at VERY BOTTOM of global.css
+   ====================================================== */
+
+/* Use same width + centering as .bp-container */
+.bp-header-inner,
+.bp-footer-inner,
+.bp-footer-bottom-inner {
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Prevent double horizontal padding (override earlier rules) */
+.bp-header-inner {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+.bp-footer-inner {
+  padding-top: 36px;
+  padding-bottom: 24px;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+.bp-footer-bottom-inner {
+  padding-top: 10px;
+  padding-bottom: 12px;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
 
