@@ -1475,41 +1475,42 @@ a { color: inherit; text-decoration: none; }
    Paste at VERY BOTTOM of global.css
    ====================================================== */
 
+/* ======================================================
+   SAFE HOT FIX — ALIGN HEADER + FOOTER WIDTH ONLY
+   Paste at VERY BOTTOM of global.css
+   ====================================================== */
+
 :root{
   --bp-wrap-max: 1120px;
   --bp-wrap-pad: 20px;
 }
 
-/* 1) Header/footer: force same "container" width */
-.bp-header-inner,
-.bp-footer-inner,
+/* Header: force same width as .bp-container */
+.bp-header-inner{
+  width: 100%;
+  max-width: var(--bp-wrap-max);
+  margin: 0 auto;
+  padding: 14px var(--bp-wrap-pad);
+  box-sizing: border-box;
+}
+
+/* Footer: force same width as .bp-container */
+.bp-footer-inner{
+  width: 100%;
+  max-width: var(--bp-wrap-max);
+  margin: 0 auto;
+  padding: 36px var(--bp-wrap-pad) 24px;
+  box-sizing: border-box;
+}
+
 .bp-footer-bottom-inner{
   width: 100%;
-  max-width: var(--bp-wrap-max) !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  padding-left: var(--bp-wrap-pad) !important;
-  padding-right: var(--bp-wrap-pad) !important;
-  box-sizing: border-box;
-}
-
-/* 2) Any section that isn't correctly wrapped: constrain its immediate children */
-.bp-section > *{
   max-width: var(--bp-wrap-max);
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: var(--bp-wrap-pad);
-  padding-right: var(--bp-wrap-pad);
+  margin: 0 auto;
+  padding: 10px var(--bp-wrap-pad) 12px;
   box-sizing: border-box;
 }
 
-/* 3) But DO NOT double-wrap real containers */
-.bp-section > .bp-container{
-  max-width: none;
-  margin: 0;
-  padding: 0;
-}
+/* IMPORTANT: protect against 100vw drift if any wrapper uses it */
+.bp-header, .bp-footer { width: 100%; }
 
-/* 4) Avoid 100vw centering drift (scrollbar causes “off center”) */
-html, body { width: 100%; }
-.bp-page { width: 100%; }
