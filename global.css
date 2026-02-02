@@ -1587,4 +1587,75 @@ html, body {
     align-items: flex-start;
   }
 }
+/* ======================================================
+   FOOTER — FULL BLEED BACKGROUND (NO DEAD ZONES)
+   ====================================================== */
+
+.bp-footer {
+  margin-top: auto;
+  width: 100%;
+}
+
+/* Full-width background layer */
+.bp-footer-bleed {
+  width: 100%;
+  background: #000;
+  border-top: 1px solid rgba(148,163,184,0.18);
+}
+
+/* Main grid */
+.bp-footer-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) 1fr;
+  gap: 72px;
+  padding: 64px 0 48px;
+}
+
+/* Brand */
+.bp-footer-copy {
+  margin-top: 12px;
+  max-width: 42ch;
+}
+
+/* Links */
+.bp-footer-links-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  gap: 48px;
+}
+
+/* Bottom bar */
+.bp-footer-bottom {
+  width: 100%;
+}
+
+.bp-footer-bottom-inner {
+  padding: 16px 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--bp-text-subtle);
+  border-top: 1px solid rgba(148,163,184,0.18);
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .bp-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 42px 0 32px;
+  }
+
+  .bp-footer-links-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .bp-footer-bottom-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
 
