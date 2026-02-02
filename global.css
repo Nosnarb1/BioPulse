@@ -1473,52 +1473,37 @@ a { color: inherit; text-decoration: none; }
 
 
 /* ======================================================
-   EMERGENCY CENTER PATCH — (temporary) forces site centering
+   CENTERING + DRIFT FIX (FINAL)
    Paste at VERY BOTTOM of global.css
    ====================================================== */
 
-:root{
-  --bp-wrap-max: 1120px;
-  --bp-wrap-pad: 20px;
+/* Make sure pseudo-elements (like .bp-page::before) anchor correctly */
+.bp-page {
+  position: relative;
+  width: 100%;
 }
 
-/* make sure root blocks aren't "shrinking" */
-html, body { width: 100%; }
-
-/* force every major shell to be full-width */
-#bp-header,
-#bp-footer,
-.bp-page,
+/* Hard guarantee: sections span full width, containers do the centering */
 .bp-header,
 .bp-footer,
-.bp-section,
 .bp-hero,
-.bp-hero-typeband {
+.bp-section,
+.bp-constellation-wrap,
+.bp-cta-band {
   width: 100%;
 }
 
-/* force centering on ALL the main inner wrappers */
-.bp-container,
-.bp-hero-typeband-inner,
-.bp-header-inner,
-.bp-footer-inner,
-.bp-footer-bottom-inner {
+/* Re-assert container centering (works even inside flex contexts) */
+.bp-container {
   width: 100%;
-  max-width: var(--bp-wrap-max);
-  margin-left: auto !important;
-  margin-right: auto !important;
-  padding-left: var(--bp-wrap-pad) !important;
-  padding-right: var(--bp-wrap-pad) !important;
-  box-sizing: border-box;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-/* if any section has inline "left" drift, neutralize it */
-.bp-container,
-.bp-header-inner,
-.bp-footer-inner,
-.bp-footer-bottom-inner {
-  left: auto !important;
-  right: auto !important;
+/* Prevent any 100vw element from causing sideways “push” */
+html, body {
+  overflow-x: hidden;
 }
-
-
