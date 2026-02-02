@@ -9,7 +9,7 @@
    ------------------------------------------------------------------ */
 @font-face {
   font-family: "Orbitron";
-  src: url("/components/assets/fonts/Orbitron-VariableFont_wght.ttf") format("truetype");
+  src: url("Components/assets/fonts/Orbitron-VariableFont_wght.ttf") format("truetype");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
