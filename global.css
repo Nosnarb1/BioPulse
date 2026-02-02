@@ -1471,40 +1471,45 @@ a { color: inherit; text-decoration: none; }
   }
 }
 /* ======================================================
-   HOT FIX — ALIGN HEADER/FOOTER WITH .bp-container
+   NUCLEAR HOT FIX — FORCE ONE CONTENT WIDTH EVERYWHERE
    Paste at VERY BOTTOM of global.css
    ====================================================== */
 
-/* Use same width + centering as .bp-container */
+:root{
+  --bp-wrap-max: 1120px;
+  --bp-wrap-pad: 20px;
+}
+
+/* 1) Header/footer: force same "container" width */
 .bp-header-inner,
 .bp-footer-inner,
-.bp-footer-bottom-inner {
-  max-width: 1120px;
+.bp-footer-bottom-inner{
+  width: 100%;
+  max-width: var(--bp-wrap-max) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: var(--bp-wrap-pad) !important;
+  padding-right: var(--bp-wrap-pad) !important;
+  box-sizing: border-box;
+}
+
+/* 2) Any section that isn't correctly wrapped: constrain its immediate children */
+.bp-section > *{
+  max-width: var(--bp-wrap-max);
   margin-left: auto;
   margin-right: auto;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: var(--bp-wrap-pad);
+  padding-right: var(--bp-wrap-pad);
+  box-sizing: border-box;
 }
 
-/* Prevent double horizontal padding (override earlier rules) */
-.bp-header-inner {
-  padding-top: 14px;
-  padding-bottom: 14px;
-  padding-left: 20px !important;
-  padding-right: 20px !important;
+/* 3) But DO NOT double-wrap real containers */
+.bp-section > .bp-container{
+  max-width: none;
+  margin: 0;
+  padding: 0;
 }
 
-.bp-footer-inner {
-  padding-top: 36px;
-  padding-bottom: 24px;
-  padding-left: 20px !important;
-  padding-right: 20px !important;
-}
-
-.bp-footer-bottom-inner {
-  padding-top: 10px;
-  padding-bottom: 12px;
-  padding-left: 20px !important;
-  padding-right: 20px !important;
-}
-
+/* 4) Avoid 100vw centering drift (scrollbar causes “off center”) */
+html, body { width: 100%; }
+.bp-page { width: 100%; }
