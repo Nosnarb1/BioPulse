@@ -7,6 +7,7 @@
 // - Toast helper
 // - Intro curtain (remove overlay after animation)
 // - Hero Wave (canvas)
+// - Hero Video autoplay harden (fix play icon overlay)
 // - Overview Constellation (stars + float + tilt)
 // - How It Works (muscle map: live values)
 // ------------------------------------------------------
@@ -121,6 +122,59 @@ function initIntroCurtain() {
   window.setTimeout(removeIntro, 2600);
 }
 
+/* ------------------------------------------------------
+   HERO VIDEO — Autoplay harden (prevents play overlay icon)
+   - Ensures autoplay/muted/inline are set at runtime
+   - Calls play() and retries on first user interaction if blocked
+------------------------------------------------------ */
+function initHeroVideoAutoplay() {
+  const v = document.querySelector(".bp-hero-video");
+  if (!v) return;
+
+  // Ensure no controls attribute is present (controls can show overlays)
+  v.removeAttribute("controls");
+
+  // Autoplay-friendly settings
+  v.muted = true;
+  v.defaultMuted = true; // helps on iOS Safari
+  v.loop = true;
+  v.playsInline = true;
+
+  // Some browsers require attributes as well as properties
+  v.setAttribute("muted", "");
+  v.setAttribute("playsinline", "");
+  v.setAttribute("autoplay", "");
+  v.setAttribute("loop", "");
+
+  // If you ever set a poster, it can look like a "paused" state — optional:
+  // v.removeAttribute("poster");
+
+  const tryPlay = () => {
+    const p = v.play();
+    if (p && typeof p.catch === "function") p.catch(() => {});
+  };
+
+  // Try immediately and on readiness events
+  tryPlay();
+  v.addEventListener("loadedmetadata", tryPlay, { once: true });
+  v.addEventListener("canplay", tryPlay, { once: true });
+
+  // Fallback: first interaction (covers strict autoplay policies)
+  const once = (fn) => {
+    let ran = false;
+    return () => {
+      if (ran) return;
+      ran = true;
+      fn();
+    };
+  };
+
+  const playOnce = once(tryPlay);
+  window.addEventListener("pointerdown", playOnce, { once: true });
+  window.addEventListener("touchstart", playOnce, { once: true, passive: true });
+  window.addEventListener("keydown", playOnce, { once: true });
+}
+
 // HERO WAVE (Canvas)
 function initHeroWave() {
   const canvas = document.getElementById("bp-hero-wave");
@@ -170,9 +224,9 @@ function initHeroWave() {
         const envelope = Math.exp(-Math.pow(u - 0.5, 2) / 0.024);
 
         const y =
-          centerY +
-          Math.sin(u * freq * Math.PI * 2 + phase) * amp * envelope +
-          Math.sin(u * 80 * Math.PI * 2 + t * 3 + i) * 3 * envelope;
+            centerY +
+            Math.sin(u * freq * Math.PI * 2 + phase) * amp * envelope +
+            Math.sin(u * 80 * Math.PI * 2 + t * 3 + i) * 3 * envelope;
 
         if (x === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
@@ -264,9 +318,6 @@ function initOverviewConstellation() {
 
 /* ------------------------------------------------------
    HOW IT WORKS — Muscle map live stats + bars
-   Requires the HTML to include:
-   .bp-frame, .bp-hz, .bp-asym, .bp-impact
-   .bp-muscle-bar-fill[data-base] and .bp-muscle-value .bp-val
 ------------------------------------------------------ */
 function initHowItWorksMuscleMap() {
   const section = document.querySelector("#how-it-works");
@@ -320,6 +371,102 @@ function initHowItWorksMuscleMap() {
     if (impactEl) impactEl.textContent = String(clamp(Math.round(jitter(32, 6)), 18, 52));
   }, 900);
 }
+function initTalkModal() {
+  const modal = document.getElementById("bp-talk-modal");
+  const openBtn = document.querySelector(".bp-header-btn"); // Talk to the Team button
+  const closeBtn = modal ? modal.querySelector(".bp-modal-close") : null;
+  const backdrop = modal ? modal.querySelector(".bp-modal-backdrop") : null;
+  const form = document.getElementById("bp-talk-form");
+
+  if (!modal || !openBtn) return;
+
+  function openModal() {
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    modal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+
+  openBtn.addEventListener("click", openModal);
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+  if (backdrop) backdrop.addEventListener("click", closeModal);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+  });
+
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // You can replace this with API submission later
+      if (window.bpToast) window.bpToast("We'll be in touch shortly!");
+
+      form.reset();
+      closeModal();
+    });
+  }
+}
+// Applications v2 — rail-controlled panel + optional auto-cycle
+(function () {
+  const root = document.querySelector(".bp-apps2");
+  if (!root) return;
+
+  const tabs = Array.from(root.querySelectorAll(".bp-apps2-tab"));
+  const panes = Array.from(root.querySelectorAll(".bp-apps2-pane"));
+  const panel = root.querySelector(".bp-apps2-panel");
+
+  function setActive(key) {
+    tabs.forEach((t) => {
+      const on = t.dataset.app === key;
+      t.classList.toggle("is-active", on);
+      t.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    panes.forEach((p) => p.classList.toggle("is-active", p.dataset.pane === key));
+
+    // tiny “refresh” nudge to make it feel dynamic
+    if (panel) {
+      panel.style.transform = "translateY(-1px)";
+      setTimeout(() => (panel.style.transform = ""), 120);
+    }
+  }
+
+  tabs.forEach((t) => t.addEventListener("click", () => setActive(t.dataset.app)));
+
+  // Optional: auto-cycle only while in view (keeps it from feeling static)
+  let idx = 0;
+  let timer = null;
+
+  const keys = tabs.map((t) => t.dataset.app);
+  const start = () => {
+    if (timer) return;
+    timer = setInterval(() => {
+      idx = (idx + 1) % keys.length;
+      setActive(keys[idx]);
+    }, 5200);
+  };
+  const stop = () => {
+    if (!timer) return;
+    clearInterval(timer);
+    timer = null;
+  };
+
+  const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => (e.isIntersecting ? start() : stop()));
+      },
+      { threshold: 0.35 }
+  );
+
+  io.observe(root);
+
+  // Pause auto-cycle if user is interacting
+  root.addEventListener("mouseenter", stop);
+  root.addEventListener("mouseleave", start);
+})();
 
 /* ------------------------------------------------------
    Init
@@ -335,6 +482,10 @@ document.addEventListener("DOMContentLoaded", () => {
   initTabs();
   initForms();
   initHeroWave();
+  initTalkModal()
+
+  // Hero video autoplay harden (fixes play overlay icon)
+  initHeroVideoAutoplay();
 
   // Animated sections (safe if missing)
   initOverviewConstellation();
