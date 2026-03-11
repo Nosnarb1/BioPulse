@@ -19,7 +19,8 @@ function initMobileMenu() {
   if (!toggle || !mobileNav) return;
 
   toggle.addEventListener("click", () => {
-    mobileNav.classList.toggle("open");
+    const isOpen = mobileNav.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", String(isOpen));
   });
 }
 
@@ -37,7 +38,35 @@ function initAccordions() {
     });
   });
 }
+function initPartnerMenu() {
+  const wraps = document.querySelectorAll(".bp-header-menuWrap");
+  if (!wraps.length) return;
 
+  wraps.forEach((wrap) => {
+    const trigger = wrap.querySelector(".bp-partner-trigger");
+    const menu = wrap.querySelector(".bp-partner-menu");
+    if (!trigger || !menu) return;
+
+    trigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = wrap.classList.toggle("open");
+      trigger.setAttribute("aria-expanded", String(isOpen));
+      menu.setAttribute("aria-hidden", String(!isOpen));
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    wraps.forEach((wrap) => {
+      if (!wrap.contains(e.target)) {
+        wrap.classList.remove("open");
+        const trigger = wrap.querySelector(".bp-partner-trigger");
+        const menu = wrap.querySelector(".bp-partner-menu");
+        if (trigger) trigger.setAttribute("aria-expanded", "false");
+        if (menu) menu.setAttribute("aria-hidden", "true");
+      }
+    });
+  });
+}
 // Tabs
 function initTabs() {
   const tabs = document.querySelectorAll(".bp-tab");
@@ -373,42 +402,137 @@ function initHowItWorksMuscleMap() {
 }
 function initTalkModal() {
   const modal = document.getElementById("bp-talk-modal");
-  const openBtn = document.querySelector(".bp-header-btn"); // Talk to the Team button
-  const closeBtn = modal ? modal.querySelector(".bp-modal-close") : null;
-  const backdrop = modal ? modal.querySelector(".bp-modal-backdrop") : null;
+  if (!modal) return;
+
+  const openers = document.querySelectorAll("[data-modal-open]");
+  const closeBtn = modal.querySelector(".bp-modal-close");
+  const backdrop = modal.querySelector(".bp-modal-backdrop");
   const form = document.getElementById("bp-talk-form");
 
-  if (!modal || !openBtn) return;
+  const title = modal.querySelector("#bp-talk-title");
+  const copy = modal.querySelector("#bp-talk-copy");
+  const interestType = modal.querySelector("#bp-interest-type");
 
-  function openModal() {
+  const labFields = modal.querySelector("#bp-lab-fields");
+  const investorFields = modal.querySelector("#bp-investor-fields");
+  const generalFields = modal.querySelector("#bp-general-fields");
+
+  if (!form) return;
+
+  function clearRequirements() {
+    modal.querySelectorAll("input, textarea").forEach((el) => {
+      if (el.type !== "hidden") el.required = false;
+    });
+
+    const firstName = modal.querySelector('input[name="firstName"]');
+    const lastName = modal.querySelector('input[name="lastName"]');
+    if (firstName) firstName.required = true;
+    if (lastName) lastName.required = true;
+  }
+
+  function setAudienceMode(mode = "general") {
+    if (interestType) interestType.value = mode;
+
+    if (labFields) labFields.hidden = mode !== "lab";
+    if (investorFields) investorFields.hidden = mode !== "investor";
+    if (generalFields) generalFields.hidden = mode !== "general";
+
+    clearRequirements();
+
+    if (title && copy) {
+      if (mode === "lab") {
+        title.textContent = "For Labs";
+        copy.textContent =
+            "Tell us who you are, where you work, and how you’d want to use BioPulse in your biomechanics lab.";
+
+        const org = modal.querySelector('input[name="labOrganization"]');
+        const role = modal.querySelector('input[name="labRole"]');
+        const email = modal.querySelector('input[name="labEmail"]');
+
+        if (org) org.required = true;
+        if (role) role.required = true;
+        if (email) email.required = true;
+      } else if (mode === "investor") {
+        title.textContent = "For Investors";
+        copy.textContent =
+            "Share your contact information and our team will follow up with you.";
+
+        const name = modal.querySelector('input[name="investorName"]');
+        const email = modal.querySelector('input[name="investorEmail"]');
+
+        if (name) name.required = true;
+        if (email) email.required = true;
+      } else {
+        title.textContent = "Partner With BioPulse";
+        copy.textContent =
+            "Tell us a bit about your interest and our team will reach out shortly.";
+
+        const email = modal.querySelector('input[name="generalEmail"]');
+        if (email) email.required = true;
+      }
+    }
+  }
+
+  function openModal(mode = "general") {
+    setAudienceMode(mode);
     modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
+
+    const firstInput = modal.querySelector('input:not([type="hidden"]), textarea, button');
+    if (firstInput) firstInput.focus();
   }
 
   function closeModal() {
     modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
   }
 
-  openBtn.addEventListener("click", openModal);
+  openers.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const mode = btn.getAttribute("data-interest") || "general";
+      document.querySelectorAll(".bp-header-menuWrap").forEach((wrap) => {
+        wrap.classList.remove("open");
+        const trigger = wrap.querySelector(".bp-partner-trigger");
+        const menu = wrap.querySelector(".bp-partner-menu");
+        if (trigger) trigger.setAttribute("aria-expanded", "false");
+        if (menu) menu.setAttribute("aria-hidden", "true");
+      });
+      openModal(mode);
+    });
+  });
+
   if (closeBtn) closeBtn.addEventListener("click", closeModal);
   if (backdrop) backdrop.addEventListener("click", closeModal);
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeModal();
+    if (e.key === "Escape" && modal.classList.contains("active")) {
+      closeModal();
+    }
   });
 
-  if (form) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-      // You can replace this with API submission later
-      if (window.bpToast) window.bpToast("We'll be in touch shortly!");
+    const mode = interestType ? interestType.value : "general";
 
-      form.reset();
-      closeModal();
-    });
-  }
+    if (window.bpToast) {
+      if (mode === "lab") {
+        window.bpToast("Thanks — we’ll reach out about BioPulse for your lab.");
+      } else if (mode === "investor") {
+        window.bpToast("Thanks — our team will follow up with you shortly.");
+      } else {
+        window.bpToast("We’ll be in touch shortly.");
+      }
+    }
+
+    form.reset();
+    setAudienceMode("general");
+    closeModal();
+  });
+
+  setAudienceMode("general");
 }
 // Applications v2 — rail-controlled panel + optional auto-cycle
 (function () {
@@ -472,22 +596,17 @@ function initTalkModal() {
    Init
 ------------------------------------------------------ */
 document.addEventListener("DOMContentLoaded", () => {
-  // AOS
   if (window.AOS) window.AOS.init({ duration: 800, once: true });
 
-  // Core
   initIntroCurtain();
   initMobileMenu();
+  initPartnerMenu();
+  initTalkModal();
   initAccordions();
   initTabs();
   initForms();
   initHeroWave();
-  initTalkModal()
-
-  // Hero video autoplay harden (fixes play overlay icon)
   initHeroVideoAutoplay();
-
-  // Animated sections (safe if missing)
   initOverviewConstellation();
   initHowItWorksMuscleMap();
 });

@@ -194,40 +194,76 @@
                 />
             </a>
 
-            <!-- Desktop nav -->
-            <nav class="bp-nav" aria-label="Primary">
-                <a href="./" class="bp-nav-link" data-nav="home">Home</a>
-                <a href="./about.html" class="bp-nav-link" data-nav="about">About</a>
-                <a href="./contact.html" class="bp-nav-link" data-nav="contact">Contact</a>
-            </nav>
-
-            <!-- Header actions -->
-            <div class="bp-header-cta">
-                <button class="bp-btn bp-btn-primary bp-header-btn" type="button" data-modal-open="#bp-talk-modal">
-                    Talk to the team
+            <!-- Desktop partner button -->
+            <div class="bp-header-cta bp-header-menuWrap bp-header-desktop-cta">
+                <button
+                        class="bp-btn bp-btn-primary bp-header-btn bp-partner-trigger"
+                        type="button"
+                        id="bp-partner-trigger"
+                        aria-expanded="false"
+                        aria-controls="bp-partner-menu"
+                >
+                    Partner With BioPulse
                 </button>
+
+                <div class="bp-partner-menu" id="bp-partner-menu" aria-hidden="true">
+                    <button
+                            type="button"
+                            class="bp-partner-option"
+                            data-modal-open="#bp-talk-modal"
+                            data-interest="lab"
+                    >
+                        For Labs
+                        <span>Bring BioPulse into your biomechanics lab</span>
+                    </button>
+
+                    <button
+                            type="button"
+                            class="bp-partner-option"
+                            data-modal-open="#bp-talk-modal"
+                            data-interest="investor"
+                    >
+                        For Investors
+                        <span>Discuss investment opportunities</span>
+                    </button>
+                </div>
             </div>
 
-            <!-- Mobile menu toggle -->
-            <button class="bp-nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="bp-nav-mobile">
-                <span class="bp-nav-toggle-line"></span>
-                <span class="bp-nav-toggle-line"></span>
-                <span class="bp-nav-toggle-line"></span>
-            </button>
+            <!-- Mobile partner button -->
+            <div class="bp-header-cta bp-header-menuWrap bp-header-mobile-cta">
+                <button
+                        class="bp-btn bp-btn-primary bp-header-btn bp-partner-trigger"
+                        type="button"
+                        id="bp-partner-trigger-mobile"
+                        aria-expanded="false"
+                        aria-controls="bp-partner-menu-mobile"
+                >
+                    Partner With BioPulse
+                </button>
+
+                <div class="bp-partner-menu bp-partner-menu-mobile" id="bp-partner-menu-mobile" aria-hidden="true">
+                    <button
+                            type="button"
+                            class="bp-partner-option"
+                            data-modal-open="#bp-talk-modal"
+                            data-interest="lab"
+                    >
+                        For Labs
+                        <span>Bring BioPulse into your biomechanics lab</span>
+                    </button>
+
+                    <button
+                            type="button"
+                            class="bp-partner-option"
+                            data-modal-open="#bp-talk-modal"
+                            data-interest="investor"
+                    >
+                        For Investors
+                        <span>Discuss investment opportunities</span>
+                    </button>
+                </div>
+            </div>
         </div>
-
-        <!-- Mobile navigation drawer (inside the pill) -->
-        <nav class="bp-nav-mobile" id="bp-nav-mobile" aria-label="Mobile">
-            <a href="./" class="bp-nav-link" data-nav="home">Home</a>
-            <a href="./about.html" class="bp-nav-link" data-nav="about">About</a>
-            <a href="./contact.html" class="bp-nav-link" data-nav="contact">Contact</a>
-
-            <div class="bp-nav-mobile-cta">
-                <button class="bp-btn bp-btn-primary bp-header-btn" type="button" data-modal-open="#bp-talk-modal">
-                    Talk to the team
-                </button>
-            </div>
-        </nav>
     </div>
 </header>
 
@@ -970,240 +1006,6 @@
             </div>
         </div>
     </section>
-
-<!--    &lt;!&ndash; HOW IT WORKS – MUSCLE MAP (CLEANER) &ndash;&gt;-->
-<!--    <section class="bp-section bp-how" id="how-it-works">-->
-<!--        <div class="bp-container bp-how-grid">-->
-
-<!--            &lt;!&ndash; LEFT: copy &ndash;&gt;-->
-<!--            <div class="bp-how-copy" data-aos="fade-right">-->
-<!--                <div class="bp-how-kicker">-->
-<!--                    <span class="bp-label">Human signal intelligence</span>-->
-<!--                    <span class="bp-how-divider" aria-hidden="true"></span>-->
-<!--                </div>-->
-
-<!--                <h2 class="bp-heading-lg bp-how-title">-->
-<!--                    From raw movement to a live, interpretable body map.-->
-<!--                </h2>-->
-
-<!--                <div class="bp-how-body">-->
-<!--                    <p class="bp-body">-->
-<!--                        BioPulse is building the signal layer of the human body — capturing the mechanical, electrical, and physiological signals that drive human function.-->
-<!--                    </p>-->
-
-<!--                    <p class="bp-body">-->
-<!--                        These signals are transformed into a continuous model of human performance, enabling AI systems, robotics, clinicians, and athletes to understand and optimize how the body works in real time.-->
-<!--                    </p>-->
-<!--                </div>-->
-
-<!--                &lt;!&ndash; MINI PIPELINE STRIP &ndash;&gt;-->
-<!--                <div class="bp-pipeline bp-pipeline-clean" data-aos="fade-up" data-aos-delay="150" aria-label="Signal pipeline">-->
-<!--                    <div class="bp-pipeline-node">-->
-<!--                        <span class="bp-pill bp-pill-quiet">Capture</span>-->
-<!--                        <span class="bp-pipeline-label">Human Signals</span>-->
-<!--                    </div>-->
-
-<!--                    <div class="bp-pipeline-arrow"></div>-->
-
-<!--                    <div class="bp-pipeline-node">-->
-<!--                        <span class="bp-pill bp-pill-quiet">Model</span>-->
-<!--                        <span class="bp-pipeline-label">Human Systems</span>-->
-<!--                    </div>-->
-
-<!--                    <div class="bp-pipeline-arrow"></div>-->
-
-<!--                    <div class="bp-pipeline-node bp-pipeline-node-strong">-->
-<!--                        <span class="bp-pill">Output</span>-->
-<!--                        <span class="bp-pipeline-label">Live Intelligence</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="bp-how-actions">-->
-<!--                    <a class="bp-btn bp-btn-primary" href="./how-it-works.html">See the signal pipeline</a>-->
-<!--                </div>-->
-<!--            </div>-->
-
-            <!-- RIGHT: visual -->
-<!--            <div class="bp-how-visual" data-aos="fade-left">-->
-<!--                <div class="bp-muscle-map bp-float-panel bp-muscle-map-anim bp-muscle-map-clean" role="group" aria-label="Live muscle map dashboard">-->
-<!--                    <div class="bp-muscle-map-header">-->
-<!--                        <span class="bp-pill bp-pill-quiet">Live capture</span>-->
-<!--                        <span class="bp-muscle-map-timestamp">-->
-<!--            Frame <span class="bp-frame">214</span> • <span class="bp-hz">120</span> Hz-->
-<!--          </span>-->
-<!--                    </div>-->
-
-<!--                    <div class="bp-muscle-map-body">-->
-<!--                        <div class="bp-muscle-map-metrics">-->
-<!--                            <div class="bp-muscle-row">-->
-<!--                                <span class="bp-muscle-name">Hamstrings</span>-->
-<!--                                <div class="bp-muscle-bar">-->
-<!--                                    <span class="bp-muscle-bar-fill" data-base="82" style="width: 82%"></span>-->
-<!--                                </div>-->
-<!--                                <span class="bp-muscle-value"><span class="bp-val">82</span>%</span>-->
-<!--                            </div>-->
-
-<!--                            <div class="bp-muscle-row">-->
-<!--                                <span class="bp-muscle-name">Quads</span>-->
-<!--                                <div class="bp-muscle-bar">-->
-<!--                                    <span class="bp-muscle-bar-fill" data-base="64" style="width: 64%"></span>-->
-<!--                                </div>-->
-<!--                                <span class="bp-muscle-value"><span class="bp-val">64</span>%</span>-->
-<!--                            </div>-->
-
-<!--                            <div class="bp-muscle-row">-->
-<!--                                <span class="bp-muscle-name">Glutes</span>-->
-<!--                                <div class="bp-muscle-bar">-->
-<!--                                    <span class="bp-muscle-bar-fill" data-base="71" style="width: 71%"></span>-->
-<!--                                </div>-->
-<!--                                <span class="bp-muscle-value"><span class="bp-val">71</span>%</span>-->
-<!--                            </div>-->
-
-<!--                            <div class="bp-muscle-row">-->
-<!--                                <span class="bp-muscle-name">Calf complex</span>-->
-<!--                                <div class="bp-muscle-bar">-->
-<!--                                    <span class="bp-muscle-bar-fill" data-base="48" style="width: 48%"></span>-->
-<!--                                </div>-->
-<!--                                <span class="bp-muscle-value"><span class="bp-val">48</span>%</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-<!--                        <div class="bp-muscle-map-figure" aria-hidden="true">-->
-<!--                            <div class="bp-muscle-figure-core"></div>-->
-<!--                            <div class="bp-muscle-figure-limb bp-muscle-figure-limb-left"></div>-->
-<!--                            <div class="bp-muscle-figure-limb bp-muscle-figure-limb-right"></div>-->
-<!--                            <div class="bp-muscle-band bp-muscle-band-quad"></div>-->
-<!--                            <div class="bp-muscle-band bp-muscle-band-ham"></div>-->
-<!--                            <div class="bp-muscle-band bp-muscle-band-calf"></div>-->
-<!--                            <div class="bp-muscle-scanline"></div>-->
-<!--                            <div class="bp-muscle-halo"></div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-
-<!--                    <div class="bp-muscle-map-footer">-->
-<!--                        <span class="bp-muscle-tag">Asymmetry: <span class="bp-asym">11</span>% L/R</span>-->
-<!--                        <span class="bp-muscle-tag">Impact window: <span class="bp-impact">32</span> ms</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
-        </div>
-    </section>
-<!--    &lt;!&ndash; METRICS / OVERVIEW &ndash;&gt;-->
-<!--    <section class="bp-section bp-constellation-wrap" id="overview">-->
-<!--        <div class="bp-constellation" aria-hidden="true"></div>-->
-
-<!--        <div class="bp-container bp-grid bp-metrics-grid" data-aos="fade-up">-->
-<!--            <div class="bp-card bp-card-metric bp-float-panel" data-float="1">-->
-<!--                <div class="bp-metric-label">Signal bandwidth</div>-->
-<!--                <div class="bp-metric-value"></div>-->
-<!--                <div class="bp-metric-sub">-->
-<!--                    Muscle acoustics, joint loading, and impact signatures captured with high temporal precision.-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--            <div class="bp-card bp-card-metric bp-float-panel" data-float="2">-->
-<!--                <div class="bp-metric-label">Sensors fused</div>-->
-<!--                <div class="bp-metric-value"></div>-->
-<!--                <div class="bp-metric-sub">-->
-<!--                    PVDF nano-arrays, IMUs, ultrasound, and motion channels combined into a synchronized biomechanical model.-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--            <div class="bp-card bp-card-metric bp-float-panel" data-float="3">-->
-<!--                <div class="bp-metric-label">Domains served</div>-->
-<!--                <div class="bp-metric-value"></div>-->
-<!--                <div class="bp-metric-sub">-->
-<!--                    Healthcare, performance training, robotics, game engines, research, and general movement analysis share one-->
-<!--                    data foundation.-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </section>-->
-
-<!--    &lt;!&ndash; APPLICATIONS &ndash;&gt;-->
-<!--    <section class="bp-section bp-constellation-wrap" id="applications">-->
-<!--        <div class="bp-constellation" aria-hidden="true"></div>-->
-
-<!--        <div class="bp-container">-->
-<!--            <div class="bp-label">Where BioPulse integrates</div>-->
-<!--            <h2 class="bp-heading-lg" style="margin: 12px 0 36px">-->
-<!--                A single biomechanical layer<br />-->
-<!--                extending across disciplines.-->
-<!--            </h2>-->
-
-<!--            <div class="bp-grid bp-app-grid" data-aos="fade-up">-->
-<!--                <div class="bp-card bp-float-panel bp-app-card">-->
-<!--                    <h3 class="bp-heading-md">Clinics &amp; rehabilitation</h3>-->
-<!--                    <p class="bp-body">-->
-<!--                        Replace guesswork with continuous biomechanical signal. Track how individual muscles distribute load during-->
-<!--                        gait, lifts, and daily movement. Identify compensation patterns, recovery trajectories, and neuromuscular-->
-<!--                        change with clinical-grade clarity.-->
-<!--                    </p>-->
-<!--                </div>-->
-
-<!--                <div class="bp-card bp-float-panel bp-app-card bp-app-card-accent">-->
-<!--                    <h3 class="bp-heading-md">Athletes &amp; performance</h3>-->
-<!--                    <p class="bp-body">-->
-<!--                        See which muscles generate acceleration, stability, and power under fatigue. Optimize technique, manage-->
-<!--                        training load intelligently, and monitor readiness using internal biomechanical signals — not just surface-->
-<!--                        metrics or perception.-->
-<!--                    </p>-->
-<!--                </div>-->
-
-<!--                <div class="bp-card bp-float-panel bp-app-card">-->
-<!--                    <h3 class="bp-heading-md">Robotics, gaming &amp; research</h3>-->
-<!--                    <p class="bp-body">-->
-<!--                        Export human movement as biomechanical data. Train soft robotics, calibrate physics engines, build realistic-->
-<!--                        motion systems, or analyze injury mechanisms frame-by-frame without reverse-engineering from static motion-->
-<!--                        capture.-->
-<!--                    </p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </section>-->
-
-<!--    &lt;!&ndash; TESTIMONIAL &ndash;&gt;-->
-<!--    <section class="bp-section" id="insight">-->
-<!--        <div class="bp-container">-->
-<!--            <div class="bp-card bp-float-panel bp-quote-card" data-aos="fade-up">-->
-<!--                <div class="bp-quote-mark" aria-hidden="true">“</div>-->
-<!--                <p class="bp-quote">-->
-<!--                    We&rsquo;ve spent years inferring movement from external markers. BioPulse gives us access to the internal-->
-<!--                    mechanics — the actual behavior of muscle under load.-->
-<!--                </p>-->
-<!--                <div class="bp-quote-meta">-->
-<!--                    <span class="bp-quote-name">Biomechanics Research Lead</span>-->
-<!--                    <span class="bp-quote-divider" aria-hidden="true"></span>-->
-<!--                    <span class="bp-quote-org">Field lab collaborator</span>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </section>-->
-
-    <!-- CTA BAND -->
-<!--    <section class="bp-cta-band" id="contact">-->
-<!--        <div class="bp-container bp-cta-inner">-->
-<!--            <div class="bp-label">BioPulse HQ</div>-->
-<!--            <h2 class="bp-heading-lg" style="margin: 12px 0 14px">This is the BioPulse HQ.</h2>-->
-<!--            <p class="bp-body bp-cta-copy">-->
-<!--                BioPulse is shared biomechanical infrastructure for clinicians, engineers, researchers, and simulation builders.-->
-<!--                If you’re developing rehabilitation tools, robotic systems, performance tech, or virtual environments — BioPulse-->
-<!--                provides the signal layer that ties it all together.-->
-<!--            </p>-->
-<!--            <div class="bp-cta-actions">-->
-<!--                <a class="bp-btn bp-btn-primary" href="./contact.html">Talk to the team</a>-->
-<!--                <a class="bp-btn bp-btn-secondary" href="./contact.html">Request a demo</a>-->
-<!--            </div>-->
-<!--            <div class="bp-cta-meta">-->
-<!--                <span class="bp-pill">Human Signals</span>-->
-<!--                <span class="bp-pill">Physiological Intelligence</span>-->
-<!--                <span class="bp-pill">Human Performance</span>-->
-<!--                <span class="bp-pill">Intelligent Systems</span>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </section>-->
-
 </main>
 
 <!-- Global toast -->
@@ -1214,24 +1016,56 @@
     <div class="bp-modal-backdrop" data-modal-close></div>
 
     <div class="bp-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="bp-talk-title">
-        <button class="bp-modal-close" type="button" aria-label="Close dialog" data-modal-close>&times;</button>
+        <button class="bp-modal-close" type="button" aria-label="Close dialog">&times;</button>
 
-        <h2 class="bp-heading-md" id="bp-talk-title">Talk to the Team</h2>
-        <p class="bp-body" style="margin-top: 8px;">
-            Leave your information and our team will reach out shortly.
+        <h2 class="bp-heading-md" id="bp-talk-title">Partner With BioPulse</h2>
+        <p class="bp-body bp-modal-copy" id="bp-talk-copy" style="margin-top: 8px;">
+            Tell us a bit about your interest and our team will reach out shortly.
         </p>
 
         <form class="bp-modal-form" id="bp-talk-form">
+            <input type="hidden" name="interestType" id="bp-interest-type" value="general" />
+
+            <!-- Shared -->
             <div class="bp-field-row">
                 <input type="text" name="firstName" placeholder="First Name" required />
                 <input type="text" name="lastName" placeholder="Last Name" required />
             </div>
 
-            <input type="email" name="email" placeholder="Email Address" required />
-            <input type="tel" name="phone" placeholder="Phone Number" required />
+            <!-- LAB FORM -->
+            <div class="bp-form-section" id="bp-lab-fields" hidden>
+                <input type="text" name="labOrganization" placeholder="Institution / Lab Name" />
+                <input type="text" name="labRole" placeholder="Your Role" />
+                <input type="email" name="labEmail" placeholder="Work Email" />
+                <input type="tel" name="labPhone" placeholder="Phone Number" />
+                <textarea
+                        name="labUseCase"
+                        rows="4"
+                        placeholder="What kind of biomechanics work do you do, and how would you want to use BioPulse?"
+                ></textarea>
+            </div>
+
+            <!-- INVESTOR FORM -->
+            <div class="bp-form-section" id="bp-investor-fields" hidden>
+                <input type="text" name="investorName" placeholder="Firm / Family Office / Organization" />
+                <input type="email" name="investorEmail" placeholder="Email Address" />
+                <input type="tel" name="investorPhone" placeholder="Phone Number" />
+                <textarea
+                        name="investorNotes"
+                        rows="4"
+                        placeholder="Anything you'd like to know before we connect?"
+                ></textarea>
+            </div>
+
+            <!-- GENERAL FALLBACK -->
+            <div class="bp-form-section" id="bp-general-fields">
+                <input type="email" name="generalEmail" placeholder="Email Address" />
+                <input type="tel" name="generalPhone" placeholder="Phone Number" />
+                <textarea name="message" rows="4" placeholder="Tell us about your interest"></textarea>
+            </div>
 
             <button type="submit" class="bp-btn bp-btn-primary" style="margin-top: 16px;">
-                Submit
+                Submit Inquiry
             </button>
         </form>
     </div>
@@ -1240,7 +1074,7 @@
 <!-- Scripts at the end for faster paint -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="./global.js?v=9"></script>
+<script src="./global.js?v=10"></script>
 
 <script>
     // AOS
@@ -1257,56 +1091,17 @@
             if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
         });
     })();
+    // Safety fallback for intro overlay
+    window.addEventListener("load", () => {
+        const intro = document.querySelector(".bp-intro");
+        if (!intro) return;
 
-    // Mobile nav toggle
-    (function () {
-        const toggle = document.querySelector(".bp-nav-toggle");
-        const drawer = document.querySelector(".bp-nav-mobile");
-        if (!toggle || !drawer) return;
+        setTimeout(() => {
+            intro.style.pointerEvents = "none";
+            intro.style.visibility = "hidden";
+        }, 1900);
+    });
 
-        toggle.addEventListener("click", () => {
-            const isOpen = drawer.classList.toggle("open");
-            toggle.setAttribute("aria-expanded", String(isOpen));
-        });
-    })();
-
-    // Modal open/close (Talk to the team)
-    (function () {
-        const openers = document.querySelectorAll("[data-modal-open]");
-        const modal = document.querySelector("#bp-talk-modal");
-        if (!modal) return;
-
-        const closers = modal.querySelectorAll("[data-modal-close]");
-        const dialog = modal.querySelector(".bp-modal-dialog");
-
-        function openModal() {
-            modal.classList.add("active");
-            modal.setAttribute("aria-hidden", "false");
-            document.body.style.overflow = "hidden";
-            // focus first input
-            const firstInput = modal.querySelector("input, button, textarea, select");
-            if (firstInput) firstInput.focus();
-        }
-
-        function closeModal() {
-            modal.classList.remove("active");
-            modal.setAttribute("aria-hidden", "true");
-            document.body.style.overflow = "";
-        }
-
-        openers.forEach((btn) => btn.addEventListener("click", openModal));
-        closers.forEach((el) => el.addEventListener("click", closeModal));
-
-        // click outside dialog
-        modal.addEventListener("click", (e) => {
-            if (dialog && !dialog.contains(e.target) && e.target === modal) closeModal();
-        });
-
-        // ESC to close
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape" && modal.classList.contains("active")) closeModal();
-        });
-    })();
 </script>
 
 </body>
