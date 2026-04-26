@@ -592,6 +592,49 @@ function initTalkModal() {
   root.addEventListener("mouseleave", start);
 })();
 
+function initBioPulseAppTabs() {
+  const section = document.querySelector("#application");
+  if (!section) return;
+
+  const tabs = section.querySelectorAll(".bp-app-tab");
+  const panels = section.querySelectorAll("[data-app-panel]");
+
+  if (!tabs.length || !panels.length) return;
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const target = tab.dataset.appTab;
+
+      tabs.forEach((t) => {
+        t.classList.remove("active");
+        t.setAttribute("aria-selected", "false");
+      });
+
+      panels.forEach((panel) => {
+        panel.classList.remove("active");
+      });
+
+      tab.classList.add("active");
+      tab.setAttribute("aria-selected", "true");
+
+      const activePanel = section.querySelector(`[data-app-panel="${target}"]`);
+      if (activePanel) activePanel.classList.add("active");
+    });
+  });
+}
+
+document.querySelectorAll(".bp-app-tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    const target = tab.dataset.tab;
+
+    document.querySelectorAll(".bp-app-tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".bp-app-panel").forEach(p => p.classList.remove("active"));
+
+    tab.classList.add("active");
+    document.querySelector(`[data-panel="${target}"]`).classList.add("active");
+  });
+});
+
 /* ------------------------------------------------------
    Init
 ------------------------------------------------------ */
@@ -609,4 +652,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initHeroVideoAutoplay();
   initOverviewConstellation();
   initHowItWorksMuscleMap();
+  initBioPulseAppTabs();
 });

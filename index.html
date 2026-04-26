@@ -425,6 +425,37 @@
 
             </div>
         </div>
+        <div class="bp-platform-mobile-flow" aria-label="BioPulse mobile platform diagram">
+            <div class="bp-mobile-flow-card">
+                <div class="bp-mobile-flow-label">BioPulse Sensors</div>
+                <div class="bp-mobile-flow-grid">
+                    <span>Mechanical</span>
+                    <span>Physiological</span>
+                    <span>Electrical</span>
+                    <span>Cardiovascular</span>
+                </div>
+            </div>
+
+            <div class="bp-mobile-flow-arrow"></div>
+
+            <div class="bp-mobile-flow-core">
+                <div class="bp-mobile-flow-kicker">BioPulse AI Systems</div>
+                <div class="bp-mobile-flow-title">Human System Intelligence</div>
+                <div class="bp-mobile-flow-sub">Continuous, real-time modeling</div>
+            </div>
+
+            <div class="bp-mobile-flow-arrow"></div>
+
+            <div class="bp-mobile-flow-card">
+                <div class="bp-mobile-flow-label">Applications</div>
+                <div class="bp-mobile-flow-grid">
+                    <span>Healthcare</span>
+                    <span>Athletes</span>
+                    <span>Robotics</span>
+                    <span>AI Systems</span>
+                </div>
+            </div>
+        </div>
     </section>
     <section class="bp-section bp-solution bp-acoustic-bg" id="solution">
         <div class="bp-container">
@@ -610,8 +641,8 @@
 
                     <!-- PVDF / MMG -->
                     <article class="bp-card bp-capture-card">
-                        <div class="bp-capture-title">Mehcanical Sensing</div>
-                        <div class="bp-capture-sub">Mechnical Deformation</div>
+                        <div class="bp-capture-title">Mechanical Sensing</div>
+                        <div class="bp-capture-sub">Mechanical Deformation</div>
 
                         <div class="bp-capture-viz bp-capture-viz-array" aria-hidden="true">
                             <div class="bp-capture-gridfx"></div>
@@ -648,210 +679,314 @@
                             <span class="bp-capture-pill">Event alignment</span>
                         </div>
                     </article>
-
-                </div>
-
-                <!-- Connector line into the UI -->
-                <div class="bp-capture-feed" aria-hidden="true">
-                    <span class="bp-capture-feedLbl">feeds</span>
-                    <span class="bp-capture-feedLine"></span>
-                    <span class="bp-capture-feedPulse"></span>
                 </div>
             </div>
+            <!-- MOBILE SOLUTION FLOW -->
+            <div class="bp-solution-mobile-flow" aria-label="BioPulse mobile solution flow">
 
-            <!-- ======================================================
-                 BIOPULSE PLATFORM GUI
-            ======================================================= -->
+                <div class="bp-mobile-solution-group">
+                    <div class="bp-mobile-solution-label">Current Technology</div>
 
-            <div class="bp-solution-bp" data-aos="fade-up" data-aos-delay="180">
+                    <div class="bp-mobile-solution-card">
+                        <span>Motion</span>
+                        <p>Kinematics and joint angles</p>
+                    </div>
 
-                <div class="bp-solution-bpHead">
-                    <span class="bp-pill">BioPulse</span>
+                    <div class="bp-mobile-solution-card">
+                        <span>Activation</span>
+                        <p>EMG-style muscle activity</p>
+                    </div>
 
-                    <div class="bp-solution-bpHeadText">
-                        <div class="bp-solution-bpTitle">Muscle Behavior Intelligence</div>
-                        <div class="bp-solution-bpSub">
-                            Direct contraction signals + AI-powered biomechanics insights
-                        </div>
+                    <div class="bp-mobile-solution-card">
+                        <span>IMU</span>
+                        <p>Acceleration and rotation</p>
                     </div>
                 </div>
 
-
-                <div class="bp-bpui">
-
-                    <!-- LEFT SIDE -->
-
-                    <div class="bp-bpui-left">
-
-                        <!-- MUSCLE MAP -->
-                        <div class="bp-muscle-map bp-float-panel bp-muscle-map-anim bp-muscle-map-clean">
-
-                            <div class="bp-muscle-map-header">
-                                <span class="bp-pill bp-pill-quiet">Live capture</span>
-                                <span class="bp-muscle-map-timestamp">
-                Frame 214 • 120 Hz
-              </span>
-                            </div>
-
-                            <div class="bp-muscle-map-body">
-
-                                <div class="bp-muscle-map-metrics">
-
-                                    <div class="bp-muscle-row">
-                                        <span class="bp-muscle-name">Hamstrings</span>
-                                        <div class="bp-muscle-bar">
-                                            <span class="bp-muscle-bar-fill" style="width:82%"></span>
-                                        </div>
-                                        <span class="bp-muscle-value">82%</span>
-                                    </div>
-
-                                    <div class="bp-muscle-row">
-                                        <span class="bp-muscle-name">Quads</span>
-                                        <div class="bp-muscle-bar">
-                                            <span class="bp-muscle-bar-fill" style="width:64%"></span>
-                                        </div>
-                                        <span class="bp-muscle-value">64%</span>
-                                    </div>
-
-                                    <div class="bp-muscle-row">
-                                        <span class="bp-muscle-name">Glutes</span>
-                                        <div class="bp-muscle-bar">
-                                            <span class="bp-muscle-bar-fill" style="width:71%"></span>
-                                        </div>
-                                        <span class="bp-muscle-value">71%</span>
-                                    </div>
-
-                                    <div class="bp-muscle-row">
-                                        <span class="bp-muscle-name">Calf</span>
-                                        <div class="bp-muscle-bar">
-                                            <span class="bp-muscle-bar-fill" style="width:48%"></span>
-                                        </div>
-                                        <span class="bp-muscle-value">48%</span>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="bp-muscle-map-footer">
-                                <span class="bp-muscle-tag">Asymmetry: 11% L/R</span>
-                                <span class="bp-muscle-tag">Impact window: 32 ms</span>
-                            </div>
-
-                        </div>
-
-
-                        <!-- FATIGUE MODEL -->
-
-                        <div class="bp-card bp-bpui-fatigue">
-
-                            <div class="bp-bpui-fatigueTop">
-                                <span class="bp-pill bp-pill-quiet">Fatigue Model</span>
-                                <span class="bp-bpui-mini">Live</span>
-                            </div>
-
-                            <div class="bp-bpui-gaugeRow">
-
-                                <div class="bp-bpui-gauge" style="--p:0.67">
-                                    <div class="bp-bpui-gaugeRing"></div>
-                                    <div class="bp-bpui-gaugeFill"></div>
-
-                                    <div class="bp-bpui-gaugeCenter">
-                                        <div class="bp-bpui-gaugePct">67%</div>
-                                        <div class="bp-bpui-gaugeLbl">Fatigue</div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- RIGHT SIDE -->
-
-                    <div class="bp-bpui-right">
-
-                        <!-- AI RECOMMENDATIONS -->
-
-                        <div class="bp-card bp-bpui-reco">
-
-                            <div class="bp-bpui-paneTop">
-                                <span class="bp-pill">AI Coach</span>
-                            </div>
-
-                            <div class="bp-bpui-recoList">
-
-                                <div class="bp-bpui-recoItem">
-                                    <div class="bp-bpui-recoTitle">Reduce intensity</div>
-                                    <div class="bp-bpui-recoSub">
-                                        Posterior chain fatigue increasing.
-                                    </div>
-                                </div>
-
-                                <div class="bp-bpui-recoItem">
-                                    <div class="bp-bpui-recoTitle">Shift load distribution</div>
-                                    <div class="bp-bpui-recoSub">
-                                        Quad contribution dropping.
-                                    </div>
-                                </div>
-
-                                <div class="bp-bpui-recoItem">
-                                    <div class="bp-bpui-recoTitle">Recovery window</div>
-                                    <div class="bp-bpui-recoSub">
-                                        2 min low intensity recommended.
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- SESSION SUMMARY -->
-
-                        <div class="bp-card bp-bpui-summary">
-
-                            <div class="bp-bpui-paneTop">
-                                <span class="bp-pill bp-pill-quiet">Session</span>
-                            </div>
-
-                            <div class="bp-bpui-kpis">
-
-                                <div class="bp-bpui-kpi">
-                                    <div class="bp-bpui-kpiK">Load Balance</div>
-                                    <div class="bp-bpui-kpiV">89%</div>
-                                </div>
-
-                                <div class="bp-bpui-kpi">
-                                    <div class="bp-bpui-kpiK">Asymmetry</div>
-                                    <div class="bp-bpui-kpiV">11%</div>
-                                </div>
-
-                                <div class="bp-bpui-kpi">
-                                    <div class="bp-bpui-kpiK">Efficiency</div>
-                                    <div class="bp-bpui-kpiV">+6%</div>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
+                <div class="bp-mobile-solution-bridge">
+                    <span>The Missing Layer</span>
                 </div>
 
-                <div class="bp-solution-bpFoot">
-                    <div>• Regional muscle contribution</div>
-                    <div>• Load distribution tracking</div>
-                    <div>• AI coaching recommendations</div>
+                <div class="bp-mobile-solution-core">
+                    <div class="bp-mobile-core-kicker">BioPulse Solution</div>
+                    <div class="bp-mobile-core-title">Direct Muscle Intelligence</div>
+                    <p>BioPulse captures contraction-generated signals and converts them into real-time biomechanical models.</p>
+                </div>
+
+                <div class="bp-mobile-solution-group">
+                    <div class="bp-mobile-solution-label">Capture Stack</div>
+
+                    <div class="bp-mobile-solution-card is-blue">
+                        <span>Acoustic Sensing</span>
+                        <p>Force proxy and dynamics</p>
+                    </div>
+
+                    <div class="bp-mobile-solution-card is-blue">
+                        <span>Mechanical Sensing</span>
+                        <p>Deformation and fatigue cues</p>
+                    </div>
+
+                    <div class="bp-mobile-solution-card is-blue">
+                        <span>Motion Context</span>
+                        <p>Gait phase and event alignment</p>
+                    </div>
                 </div>
 
             </div>
-
         </div>
     </section>
+    <!-- ======================================================
+     BIOPULSE APPLICATION — Clinical Intelligence Layer
+====================================================== -->
+
+    <section class="bp-section bp-application" id="application">
+        <div class="bp-container">
+
+            <!-- HEADER -->
+            <div class="bp-application-head" data-aos="fade-up">
+                <div class="bp-label">BioPulse Application</div>
+                <h2 class="bp-heading-lg">Sensor fusion translated into clinical action.</h2>
+                <p class="bp-body bp-application-sub">
+                    A clinical interface that converts multi-sensor muscle data into force, fatigue,
+                    compensation, and therapy recommendations.
+                </p>
+            </div>
+
+            <div class="bp-app-shell" data-aos="fade-up" data-aos-delay="150">
+
+                <!-- DEMO BAR -->
+                <div class="bp-app-demo-bar">
+                    <div>
+                        <span class="bp-demo-label">Patient</span>
+                        <strong>ACL Rehab • Week 6</strong>
+                    </div>
+
+                    <div>
+                        <span class="bp-demo-label">Assessment</span>
+                        <strong>Single-leg squat</strong>
+                    </div>
+
+                    <div>
+                        <span class="bp-demo-label">Sensor Fusion</span>
+                        <strong>Sensor 1 · Sensor 2 · Sensor 3</strong>
+                    </div>
+
+                    <div>
+                        <span class="bp-demo-label">Confidence</span>
+                        <strong>92%</strong>
+                    </div>
+                </div>
+
+                <!-- TABS -->
+                <div class="bp-app-tabs">
+                    <button class="bp-app-tab active" data-tab="activity">Muscle Activity</button>
+                    <button class="bp-app-tab" data-tab="force">Force Quality</button>
+                    <button class="bp-app-tab" data-tab="fatigue">Fatigue & Recovery</button>
+                    <button class="bp-app-tab" data-tab="plan">Clinical Plan</button>
+                </div>
+
+                <!-- INSIGHT -->
+                <div class="bp-app-insight">
+                    <strong>Current Finding:</strong>
+                    Hamstring-dominant compensation pattern detected with delayed glute activation.
+                </div>
+
+                <!-- PANELS -->
+                <div class="bp-app-panels">
+
+                    <!-- MUSCLE ACTIVITY -->
+                    <div class="bp-app-panel active" data-panel="activity">
+                        <div class="bp-analysis-insights">
+
+                            <div class="bp-analysis-card">
+                                <span class="bp-pill bp-pill-quiet">Recruitment</span>
+                                <h3>Hamstring-dominant strategy</h3>
+                                <p>Glute activation is delayed while hamstrings activate early.</p>
+
+                                <div class="bp-mini-bars">
+                                    <div><span>Hamstrings</span><b style="width:82%"></b></div>
+                                    <div><span>Glutes</span><b style="width:58%"></b></div>
+                                    <div><span>Quads</span><b style="width:64%"></b></div>
+                                </div>
+                            </div>
+
+                            <div class="bp-analysis-card">
+                                <span class="bp-pill bp-pill-quiet">Timing</span>
+                                <h3>Activation delay</h3>
+                                <p>Quad activation delayed by 42 ms relative to movement phase.</p>
+
+                                <div class="bp-mini-timing">
+                                    <span class="target"></span>
+                                    <span class="actual"></span>
+                                </div>
+                                <div class="bp-mini-caption">Target vs actual firing window</div>
+                            </div>
+
+                            <div class="bp-analysis-card">
+                                <span class="bp-pill bp-pill-quiet">Compensation</span>
+                                <h3>Posterior chain overload</h3>
+                                <p>Secondary muscles compensating for reduced glute engagement.</p>
+
+                                <div class="bp-mini-meter" style="--v:0.72"></div>
+                                <div class="bp-mini-caption">Severity: Moderate</div>
+                            </div>
+
+                            <div class="bp-analysis-card">
+                                <span class="bp-pill bp-pill-quiet">Imbalance</span>
+                                <h3>Left/Right asymmetry</h3>
+                                <p>11% imbalance detected during load phase.</p>
+
+                                <div class="bp-mini-balance">
+                                    <span class="left" style="width:56%"></span>
+                                    <span class="right" style="width:44%"></span>
+                                </div>
+                                <div class="bp-mini-caption">Left 56% / Right 44%</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- FORCE QUALITY -->
+                    <div class="bp-app-panel" data-panel="force">
+                        <div class="bp-analysis-insights">
+
+                            <div class="bp-analysis-card">
+                                <span class="bp-pill bp-pill-quiet">Peak Force</span>
+                                <h3>82%</h3>
+                                <p>Stable output across repetitions.</p>
+
+                                <div class="bp-force-meter" style="--v:0.82"></div>
+                                <div class="bp-mini-caption">Target threshold: 75%</div>
+                            </div>
+
+                            <div class="bp-analysis-card">
+                                <span class="bp-pill bp-pill-quiet">Symmetry</span>
+                                <h3>89%</h3>
+                                <p>Reduced balance under fatigue.</p>
+
+                                <div class="bp-force-balance">
+                                    <span class="left" style="width:53%"></span>
+                                    <span class="right" style="width:47%"></span>
+                                </div>
+                                <div class="bp-mini-caption">Left 53% / Right 47%</div>
+                            </div>
+
+                            <div class="bp-analysis-card bp-force-rate-card">
+
+                                <span class="bp-pill bp-pill-quiet">Rate</span>
+
+                                <div class="bp-force-rate-mobile">
+                                    <div>
+                                        <h3>Force Development</h3>
+                                        <p>Slower contraction speed in final phase.</p>
+                                    </div>
+
+                                    <div class="bp-force-rate-score">
+                                        <strong>-18%</strong>
+                                        <span>vs baseline</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="bp-analysis-card">
+                                <span class="bp-pill bp-pill-quiet">Consistency</span>
+                                <h3>Drop-off: 18%</h3>
+                                <p>Force decreases across repeated loading cycles.</p>
+
+                                <div class="bp-force-reps">
+                                    <span style="height:88%"></span>
+                                    <span style="height:82%"></span>
+                                    <span style="height:76%"></span>
+                                    <span style="height:70%"></span>
+                                    <span style="height:64%"></span>
+                                </div>
+                                <div class="bp-mini-caption">Rep-to-rep decline</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- FATIGUE -->
+                    <div class="bp-app-panel" data-panel="fatigue">
+                        <div class="bp-fatigue-layout">
+
+                            <div class="bp-card bp-bpui-fatigue">
+                                <span class="bp-pill bp-pill-quiet">Fatigue Index</span>
+
+                                <div class="bp-bpui-gauge" style="--p:0.67">
+                                    <div class="bp-bpui-gaugeCenter">
+                                        <div>67%</div>
+                                        <span>Fatigue</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bp-analysis-card">
+                                <span class="bp-pill bp-pill-quiet">Endurance</span>
+                                <h3>Reduced capacity</h3>
+                                <p>Fatigue onset occurs earlier than baseline.</p>
+                            </div>
+
+                            <div class="bp-analysis-card">
+                                <span class="bp-pill bp-pill-quiet">Recovery</span>
+                                <h3>68% Ready</h3>
+                                <p>Partial recovery detected between cycles.</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- PLAN -->
+                    <div class="bp-app-panel" data-panel="plan">
+                        <div class="bp-plan-layout">
+
+                            <div class="bp-card bp-bpui-reco">
+                                <span class="bp-pill">AI Recommendation</span>
+
+                                <div class="bp-bpui-recoItem">
+                                    <div>Reduce intensity</div>
+                                    <span>Posterior chain fatigue rising</span>
+                                </div>
+
+                                <div class="bp-bpui-recoItem">
+                                    <div>Activate glutes</div>
+                                    <span>Improve recruitment pattern</span>
+                                </div>
+
+                                <div class="bp-bpui-recoItem">
+                                    <div>Recovery interval</div>
+                                    <span>2 minutes low intensity</span>
+                                </div>
+                            </div>
+
+                            <div class="bp-card bp-bpui-summary">
+                                <span class="bp-pill bp-pill-quiet">Session Summary</span>
+
+                                <div class="bp-bpui-kpis">
+                                    <div><span>Load Balance</span><strong>89%</strong></div>
+                                    <div><span>Asymmetry</span><strong>11%</strong></div>
+                                    <div><span>Progress</span><strong>+6%</strong></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- FOOT -->
+                <div class="bp-application-foot">
+                    <div>• Real-time force estimation</div>
+                    <div>• Fatigue progression tracking</div>
+                    <div>• Compensation detection</div>
+                    <div>• AI-guided therapy decisions</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <!-- APPLICATIONS v2 — Interactive (non-static) -->
     <section class="bp-section bp-apps2 bp-acoustic-bg" id="applications">
         <div class="bp-container bp-apps2-inner" data-aos="fade-up">
