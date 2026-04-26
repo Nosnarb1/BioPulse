@@ -5017,3 +5017,48 @@ a {
     transform: translateX(0);
   }
 }
+@media (max-width: 700px) {
+
+  .bp-force-rate-mobile {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto; /* 👈 KEY FIX */
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* LEFT SIDE */
+  .bp-force-rate-mobile > div:first-child {
+    min-width: 0; /* 👈 allows text to shrink */
+  }
+
+  .bp-force-rate-mobile h3 {
+    margin: 0 0 4px !important;
+    font-size: 12px !important; /* slightly smaller */
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* prevents pushing */
+  }
+
+  .bp-force-rate-mobile p {
+    margin: 0 !important;
+    font-size: 9.5px !important;
+    line-height: 1.35;
+  }
+
+  /* RIGHT SIDE METRIC */
+  .bp-force-rate-score {
+    min-width: 72px; /* 👈 guarantees visibility */
+    flex-shrink: 0;
+    padding: 8px;
+  }
+
+  .bp-force-rate-score strong {
+    font-size: 18px; /* slightly reduced */
+  }
+
+  .bp-force-rate-score span {
+    font-size: 7px;
+  }
+}
