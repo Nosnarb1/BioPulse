@@ -4603,3 +4603,417 @@ a {
     font-size: 22px;
   }
 }
+.bp-fatigue-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.bp-fatigue-summary > div {
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(58,199,255,0.22);
+  background: rgba(0,0,0,0.34);
+}
+
+.bp-fatigue-summary span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(58,199,255,0.82);
+}
+
+.bp-fatigue-summary strong {
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.94);
+}
+
+@media (max-width: 700px) {
+  .bp-fatigue-summary {
+    grid-template-columns: 1fr;
+  }
+}
+/* =========================================================
+   BIOPULSE APPLICATION — MOBILE APP UX REDESIGN
+   ========================================================= */
+
+@media (max-width: 700px) {
+  #application {
+    padding: 64px 0;
+  }
+
+  #application .bp-container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .bp-application-head {
+    text-align: left;
+    margin-bottom: 22px;
+  }
+
+  .bp-application-head .bp-heading-lg {
+    font-size: 24px;
+    line-height: 1.16;
+    letter-spacing: 0.09em;
+  }
+
+  .bp-application-sub {
+    margin-top: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  /* phone/app shell */
+  .bp-app-shell {
+    margin-top: 0;
+    padding: 12px;
+    border-radius: 30px;
+    background:
+            radial-gradient(circle at 50% 0%, rgba(58,199,255,0.16), transparent 46%),
+            #050608;
+    border: 1px solid rgba(255,255,255,0.16);
+    box-shadow:
+            0 28px 80px rgba(0,0,0,0.85),
+            0 0 0 1px rgba(58,199,255,0.10);
+    overflow: hidden;
+  }
+
+  /* session summary becomes app header */
+  .bp-app-demo-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 8px;
+    margin-bottom: 12px;
+    border-radius: 22px;
+    background: rgba(255,255,255,0.035);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .bp-app-demo-bar > div {
+    min-width: 0;
+    padding: 10px;
+    border-radius: 16px;
+    background: rgba(0,0,0,0.34);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .bp-app-demo-bar > div:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  .bp-demo-label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(245,248,255,0.42);
+  }
+
+  .bp-app-demo-bar strong {
+    display: block;
+    font-size: 10px;
+    line-height: 1.35;
+    letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.92);
+    overflow-wrap: anywhere;
+  }
+
+  /* mobile tab bar like an app */
+  .bp-app-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 2px 0 12px;
+    margin: 0;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+
+  .bp-app-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .bp-app-tab {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    min-width: max-content;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(255,255,255,0.045);
+    color: rgba(245,248,255,0.62);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+  }
+
+  .bp-app-tab.active {
+    background: rgba(255,255,255,0.96);
+    color: #000;
+    box-shadow: 0 0 24px rgba(58,199,255,0.16);
+  }
+
+  /* finding card */
+  .bp-app-insight {
+    margin: 0 0 12px;
+    padding: 13px 14px;
+    border-radius: 20px;
+    background:
+            radial-gradient(circle at 12% 20%, rgba(58,199,255,0.12), transparent 55%),
+            rgba(0,0,0,0.42);
+    border: 1px solid rgba(58,199,255,0.24);
+    font-size: 11px;
+    line-height: 1.55;
+    color: rgba(245,248,255,0.68);
+  }
+
+  .bp-app-insight strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(58,199,255,0.92);
+  }
+
+  /* panel pages */
+  .bp-app-panel {
+    display: none;
+  }
+
+  .bp-app-panel.active {
+    display: block;
+    animation: bpMobileAppPanelIn 220ms ease-out both;
+  }
+
+  /* all content becomes compact app rows */
+  .bp-analysis-insights,
+  .bp-fatigue-layout,
+  .bp-plan-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .bp-analysis-card,
+  .bp-card {
+    min-width: 0;
+    padding: 13px 14px !important;
+    border-radius: 20px !important;
+    background:
+            radial-gradient(circle at 12% 18%, rgba(255,255,255,0.045), transparent 55%),
+            rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .bp-analysis-card .bp-pill,
+  .bp-card .bp-pill {
+    width: fit-content;
+    padding: 4px 9px;
+    font-size: 8px;
+    letter-spacing: 0.13em;
+  }
+
+  .bp-analysis-card h3 {
+    margin: 8px 0 5px !important;
+    font-size: 14px !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0.07em !important;
+  }
+
+  .bp-analysis-card p {
+    margin: 0 !important;
+    font-size: 10.5px !important;
+    line-height: 1.45 !important;
+    color: rgba(245,248,255,0.62);
+  }
+
+  /* micro visuals compact */
+  .bp-mini-bars,
+  .bp-mini-timing,
+  .bp-mini-meter,
+  .bp-mini-balance,
+  .bp-force-meter,
+  .bp-force-balance,
+  .bp-force-reps {
+    margin-top: 9px !important;
+  }
+
+  .bp-mini-bars {
+    gap: 6px;
+  }
+
+  .bp-mini-bars div {
+    grid-template-columns: 72px 1fr;
+  }
+
+  .bp-mini-bars span,
+  .bp-mini-caption {
+    font-size: 7.5px;
+  }
+
+  .bp-force-reps {
+    height: 34px !important;
+  }
+
+  /* force rate as metric, not graph */
+  .bp-force-rate-mobile {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .bp-force-rate-mobile h3 {
+    margin: 0 0 5px !important;
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+  }
+
+  .bp-force-rate-mobile p {
+    margin: 0 !important;
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+  }
+
+  .bp-force-rate-score {
+    min-width: 82px;
+    min-height: 64px;
+    padding: 10px;
+    border-radius: 16px;
+    border: 1px solid rgba(58,199,255,0.26);
+    background:
+            radial-gradient(circle at 50% 40%, rgba(58,199,255,0.14), transparent 60%),
+            rgba(0,0,0,0.28);
+    display: grid;
+    place-items: center;
+  }
+
+  .bp-force-rate-score strong {
+    font-size: 20px;
+    letter-spacing: 0.06em;
+    color: rgba(58,199,255,0.95);
+  }
+
+  .bp-force-rate-score span {
+    margin-top: -6px;
+    font-size: 7px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(245,248,255,0.52);
+  }
+
+  /* fatigue tab: summary first */
+  .bp-fatigue-summary {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .bp-fatigue-summary > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 13px;
+    border-radius: 18px;
+  }
+
+  .bp-fatigue-summary span {
+    margin: 0;
+    font-size: 8px;
+  }
+
+  .bp-fatigue-summary strong {
+    font-size: 11px;
+    text-align: right;
+  }
+
+  .bp-bpui-fatigue {
+    min-height: auto;
+    display: grid;
+    place-items: center;
+    gap: 14px;
+  }
+
+  .bp-bpui-gauge {
+    width: 128px;
+    height: 128px;
+  }
+
+  .bp-bpui-gaugeCenter div {
+    font-size: 22px;
+  }
+
+  /* plan tab */
+  .bp-bpui-reco {
+    display: grid;
+    gap: 10px;
+  }
+
+  .bp-bpui-recoItem {
+    padding: 12px;
+    border-radius: 16px;
+  }
+
+  .bp-bpui-recoItem div {
+    font-size: 10.5px;
+  }
+
+  .bp-bpui-recoItem span {
+    font-size: 10px;
+  }
+
+  .bp-bpui-kpis {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .bp-bpui-kpis > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    padding: 12px 13px;
+    border-radius: 16px;
+  }
+
+  .bp-bpui-kpis strong {
+    margin-top: 0;
+    font-size: 18px;
+  }
+
+  .bp-application-foot {
+    margin-top: 14px;
+    padding: 12px;
+    border-radius: 18px;
+    display: grid;
+    gap: 7px;
+    justify-content: stretch;
+    font-size: 8px;
+    line-height: 1.4;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+}
+
+@keyframes bpMobileAppPanelIn {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

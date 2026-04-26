@@ -1,99 +1,8 @@
 // ------------------------------------------------------
-// BioPulse global.js (CLEAN + INTRO CURTAIN + ANIMATIONS)
-// - Mobile nav
-// - Accordion
-// - Tabs
-// - Forms (simple validation helper)
-// - Toast helper
-// - Intro curtain (remove overlay after animation)
-// - Hero Wave (canvas)
-// - Hero Video autoplay harden (fix play icon overlay)
-// - Overview Constellation (stars + float + tilt)
-// - How It Works (muscle map: live values)
+// BioPulse global.js
 // ------------------------------------------------------
 
-// Mobile nav
-function initMobileMenu() {
-  const toggle = document.querySelector(".bp-nav-toggle");
-  const mobileNav = document.querySelector(".bp-nav-mobile");
-  if (!toggle || !mobileNav) return;
-
-  toggle.addEventListener("click", () => {
-    const isOpen = mobileNav.classList.toggle("open");
-    toggle.setAttribute("aria-expanded", String(isOpen));
-  });
-}
-
-// Accordions
-function initAccordions() {
-  const items = document.querySelectorAll(".bp-accordion-item");
-  if (!items.length) return;
-
-  items.forEach((item) => {
-    const header = item.querySelector(".bp-accordion-header");
-    if (!header) return;
-
-    header.addEventListener("click", () => {
-      item.classList.toggle("active");
-    });
-  });
-}
-function initPartnerMenu() {
-  const wraps = document.querySelectorAll(".bp-header-menuWrap");
-  if (!wraps.length) return;
-
-  wraps.forEach((wrap) => {
-    const trigger = wrap.querySelector(".bp-partner-trigger");
-    const menu = wrap.querySelector(".bp-partner-menu");
-    if (!trigger || !menu) return;
-
-    trigger.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const isOpen = wrap.classList.toggle("open");
-      trigger.setAttribute("aria-expanded", String(isOpen));
-      menu.setAttribute("aria-hidden", String(!isOpen));
-    });
-  });
-
-  document.addEventListener("click", (e) => {
-    wraps.forEach((wrap) => {
-      if (!wrap.contains(e.target)) {
-        wrap.classList.remove("open");
-        const trigger = wrap.querySelector(".bp-partner-trigger");
-        const menu = wrap.querySelector(".bp-partner-menu");
-        if (trigger) trigger.setAttribute("aria-expanded", "false");
-        if (menu) menu.setAttribute("aria-hidden", "true");
-      }
-    });
-  });
-}
-// Tabs
-function initTabs() {
-  const tabs = document.querySelectorAll(".bp-tab");
-  const panels = document.querySelectorAll(".bp-tab-panel");
-  if (!tabs.length || !panels.length) return;
-
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      const target = tab.dataset.tab;
-      if (!target) return;
-
-      tabs.forEach((t) => t.classList.remove("active"));
-      panels.forEach((p) => p.classList.remove("active"));
-
-      tab.classList.add("active");
-
-      // Supports either #id or data-panel mapping
-      const panelById = document.getElementById(target);
-      const panelByData = document.querySelector(`.bp-tab-panel[data-panel="${target}"]`);
-      const panel = panelById || panelByData;
-
-      if (panel) panel.classList.add("active");
-    });
-  });
-}
-
-// Toast (optional)
+// Toast
 window.bpToast = function bpToast(message, duration = 2600) {
   const toast = document.querySelector(".bp-toast");
   if (!toast) return;
@@ -107,299 +16,47 @@ window.bpToast = function bpToast(message, duration = 2600) {
   }, duration);
 };
 
-// Forms (optional simple email check)
-function initForms() {
-  const forms = document.querySelectorAll(".bp-form");
-  if (!forms.length) return;
+// Header partner dropdown
+function initPartnerMenu() {
+  const wraps = document.querySelectorAll(".bp-header-menuWrap");
+  if (!wraps.length) return;
 
-  forms.forEach((form) => {
-    form.addEventListener("submit", (e) => {
-      const emailInput = form.querySelector("#emailInput");
-      const errorEl = form.querySelector(".bp-error");
+  wraps.forEach((wrap) => {
+    const trigger = wrap.querySelector(".bp-partner-trigger");
+    const menu = wrap.querySelector(".bp-partner-menu");
+    if (!trigger || !menu) return;
 
-      if (!emailInput || !errorEl) return;
+    trigger.addEventListener("click", (e) => {
+      e.stopPropagation();
 
-      if (!emailInput.value.includes("@")) {
-        e.preventDefault();
-        errorEl.textContent = "Please enter a valid email.";
-        emailInput.classList.add("bp-input-error");
-        return;
-      }
+      wraps.forEach((otherWrap) => {
+        if (otherWrap !== wrap) {
+          otherWrap.classList.remove("open");
+          const otherTrigger = otherWrap.querySelector(".bp-partner-trigger");
+          const otherMenu = otherWrap.querySelector(".bp-partner-menu");
+          if (otherTrigger) otherTrigger.setAttribute("aria-expanded", "false");
+          if (otherMenu) otherMenu.setAttribute("aria-hidden", "true");
+        }
+      });
 
-      errorEl.textContent = "";
-      emailInput.classList.remove("bp-input-error");
+      const isOpen = wrap.classList.toggle("open");
+      trigger.setAttribute("aria-expanded", String(isOpen));
+      menu.setAttribute("aria-hidden", String(!isOpen));
+    });
+  });
 
-      // Only show toast if you want it
-      if (window.bpToast) window.bpToast("Submitted!");
+  document.addEventListener("click", () => {
+    wraps.forEach((wrap) => {
+      wrap.classList.remove("open");
+      const trigger = wrap.querySelector(".bp-partner-trigger");
+      const menu = wrap.querySelector(".bp-partner-menu");
+      if (trigger) trigger.setAttribute("aria-expanded", "false");
+      if (menu) menu.setAttribute("aria-hidden", "true");
     });
   });
 }
 
-// Intro curtain cleanup – remove overlay after animation ends
-function initIntroCurtain() {
-  const intro = document.querySelector(".bp-intro");
-  if (!intro) return;
-
-  const removeIntro = () => {
-    if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
-  };
-
-  // Primary: remove when the CSS animation finishes
-  intro.addEventListener("animationend", removeIntro, { once: true });
-
-  // Safety: remove even if animationend never fires (rare but happens)
-  window.setTimeout(removeIntro, 2600);
-}
-
-/* ------------------------------------------------------
-   HERO VIDEO — Autoplay harden (prevents play overlay icon)
-   - Ensures autoplay/muted/inline are set at runtime
-   - Calls play() and retries on first user interaction if blocked
------------------------------------------------------- */
-function initHeroVideoAutoplay() {
-  const v = document.querySelector(".bp-hero-video");
-  if (!v) return;
-
-  // Ensure no controls attribute is present (controls can show overlays)
-  v.removeAttribute("controls");
-
-  // Autoplay-friendly settings
-  v.muted = true;
-  v.defaultMuted = true; // helps on iOS Safari
-  v.loop = true;
-  v.playsInline = true;
-
-  // Some browsers require attributes as well as properties
-  v.setAttribute("muted", "");
-  v.setAttribute("playsinline", "");
-  v.setAttribute("autoplay", "");
-  v.setAttribute("loop", "");
-
-  // If you ever set a poster, it can look like a "paused" state — optional:
-  // v.removeAttribute("poster");
-
-  const tryPlay = () => {
-    const p = v.play();
-    if (p && typeof p.catch === "function") p.catch(() => {});
-  };
-
-  // Try immediately and on readiness events
-  tryPlay();
-  v.addEventListener("loadedmetadata", tryPlay, { once: true });
-  v.addEventListener("canplay", tryPlay, { once: true });
-
-  // Fallback: first interaction (covers strict autoplay policies)
-  const once = (fn) => {
-    let ran = false;
-    return () => {
-      if (ran) return;
-      ran = true;
-      fn();
-    };
-  };
-
-  const playOnce = once(tryPlay);
-  window.addEventListener("pointerdown", playOnce, { once: true });
-  window.addEventListener("touchstart", playOnce, { once: true, passive: true });
-  window.addEventListener("keydown", playOnce, { once: true });
-}
-
-// HERO WAVE (Canvas)
-function initHeroWave() {
-  const canvas = document.getElementById("bp-hero-wave");
-  if (!canvas) return;
-
-  const ctx = canvas.getContext("2d");
-  const dpr = window.devicePixelRatio || 1;
-
-  let width = 0;
-  let height = 0;
-  let centerY = 0;
-
-  function resize() {
-    const rect = canvas.getBoundingClientRect();
-    width = Math.max(1, Math.floor(rect.width));
-    height = Math.max(1, Math.floor(rect.height));
-
-    canvas.width = Math.floor(width * dpr);
-    canvas.height = Math.floor(height * dpr);
-
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    centerY = height / 2;
-  }
-
-  resize();
-  window.addEventListener("resize", resize);
-
-  let t = 0;
-
-  function draw() {
-    t += 0.02;
-    ctx.clearRect(0, 0, width, height);
-
-    const lines = 14;
-    const breath = 1 + 0.16 * Math.sin(t * 0.35);
-
-    for (let i = 0; i < lines; i++) {
-      const p = i / (lines - 1);
-      const amp = (58 + p * 42) * breath;
-      const freq = 10 + p * 4;
-      const phase = t * (1.2 + p * 0.6);
-
-      ctx.beginPath();
-
-      for (let x = 0; x <= width; x += 4) {
-        const u = x / width;
-        const envelope = Math.exp(-Math.pow(u - 0.5, 2) / 0.024);
-
-        const y =
-            centerY +
-            Math.sin(u * freq * Math.PI * 2 + phase) * amp * envelope +
-            Math.sin(u * 80 * Math.PI * 2 + t * 3 + i) * 3 * envelope;
-
-        if (x === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-
-      ctx.strokeStyle = `rgba(255,255,255,${0.12 + p * 0.14})`;
-      ctx.lineWidth = 0.6 + p * 0.45;
-      ctx.stroke();
-    }
-
-    requestAnimationFrame(draw);
-  }
-
-  requestAnimationFrame(draw);
-}
-
-/* ------------------------------------------------------
-   OVERVIEW — Constellation (stars + float + gentle tilt)
------------------------------------------------------- */
-function initOverviewConstellation() {
-  const wrap = document.querySelector("#overview.bp-constellation-wrap");
-  const layer = wrap ? wrap.querySelector(".bp-constellation") : null;
-  if (!wrap || !layer) return;
-
-  // Build stars once
-  if (!layer.dataset.built) {
-    layer.dataset.built = "true";
-    const starCount = 26;
-
-    for (let i = 0; i < starCount; i++) {
-      const s = document.createElement("span");
-      s.className = "bp-star" + (Math.random() > 0.7 ? " is-blue" : "");
-      s.style.left = `${Math.random() * 100}%`;
-      s.style.top = `${Math.random() * 100}%`;
-      s.style.setProperty("--tw", `${3.6 + Math.random() * 4.8}s`);
-      s.style.setProperty("--td", `${Math.random() * 4.5}s`);
-      layer.appendChild(s);
-    }
-  }
-
-  const panels = wrap.querySelectorAll(".bp-float-panel");
-  if (!panels.length) return;
-
-  // Stagger float phase
-  panels.forEach((p, idx) => {
-    const delay = (idx * 0.55) + (Math.random() * 0.25);
-    p.style.animationDelay = `${delay}s`;
-  });
-
-  // Turn on floating when in view
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) {
-        panels.forEach((p) => p.classList.add("bp-float-on"));
-        io.disconnect();
-      }
-    });
-  }, { threshold: 0.25 });
-
-  io.observe(wrap);
-
-  // Gentle tilt (kept subtle to avoid fighting hover)
-  const maxTilt = 4.5; // degrees
-  const maxLift = 2;   // px
-
-  function onMove(ev) {
-    const r = wrap.getBoundingClientRect();
-    const cx = (ev.clientX - r.left) / r.width - 0.5;
-    const cy = (ev.clientY - r.top) / r.height - 0.5;
-
-    panels.forEach((p) => {
-      const rx = (-cy * maxTilt).toFixed(2);
-      const ry = (cx * maxTilt).toFixed(2);
-      const lift = (Math.abs(cx) + Math.abs(cy)) * maxLift;
-
-      p.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translate3d(0, ${(-lift).toFixed(2)}px, 0)`;
-    });
-  }
-
-  function onLeave() {
-    panels.forEach((p) => {
-      p.style.transform = "";
-    });
-  }
-
-  wrap.addEventListener("mousemove", onMove);
-  wrap.addEventListener("mouseleave", onLeave);
-}
-
-/* ------------------------------------------------------
-   HOW IT WORKS — Muscle map live stats + bars
------------------------------------------------------- */
-function initHowItWorksMuscleMap() {
-  const section = document.querySelector("#how-it-works");
-  if (!section) return;
-
-  const frameEl = section.querySelector(".bp-frame");
-  const hzEl = section.querySelector(".bp-hz");
-  const asymEl = section.querySelector(".bp-asym");
-  const impactEl = section.querySelector(".bp-impact");
-
-  const fills = Array.from(section.querySelectorAll(".bp-muscle-bar-fill"));
-  const vals = Array.from(section.querySelectorAll(".bp-muscle-value .bp-val"));
-
-  // If the upgraded markup isn't present, do nothing (no errors)
-  if (!frameEl || !hzEl || fills.length === 0 || vals.length === 0) return;
-
-  let frame = parseInt(frameEl.textContent || "214", 10);
-  let hz = parseInt(hzEl.textContent || "120", 10);
-
-  let running = false;
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { running = e.isIntersecting; });
-  }, { threshold: 0.25 });
-
-  io.observe(section);
-
-  const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
-  const jitter = (base, amt) => clamp(base + (Math.random() * amt * 2 - amt), 0, 100);
-
-  setInterval(() => {
-    if (!running) return;
-
-    // Frame count
-    frame += 1 + Math.floor(Math.random() * 2);
-    frameEl.textContent = String(frame);
-
-    // Hz drift
-    hz = clamp(hz + (Math.random() > 0.85 ? (Math.random() > 0.5 ? 1 : -1) : 0), 110, 140);
-    hzEl.textContent = String(hz);
-
-    // Bar updates
-    fills.forEach((f, idx) => {
-      const base = parseInt(f.getAttribute("data-base") || "60", 10);
-      const next = Math.round(jitter(base, 6));
-      f.style.width = `${next}%`;
-      if (vals[idx]) vals[idx].textContent = String(next);
-    });
-
-    // Footer stats
-    if (asymEl) asymEl.textContent = String(clamp(Math.round(jitter(11, 3)), 6, 18));
-    if (impactEl) impactEl.textContent = String(clamp(Math.round(jitter(32, 6)), 18, 52));
-  }, 900);
-}
+// Talk modal
 function initTalkModal() {
   const modal = document.getElementById("bp-talk-modal");
   if (!modal) return;
@@ -407,74 +64,8 @@ function initTalkModal() {
   const openers = document.querySelectorAll("[data-modal-open]");
   const closeBtn = modal.querySelector(".bp-modal-close");
   const backdrop = modal.querySelector(".bp-modal-backdrop");
-  const form = document.getElementById("bp-talk-form");
 
-  const title = modal.querySelector("#bp-talk-title");
-  const copy = modal.querySelector("#bp-talk-copy");
-  const interestType = modal.querySelector("#bp-interest-type");
-
-  const labFields = modal.querySelector("#bp-lab-fields");
-  const investorFields = modal.querySelector("#bp-investor-fields");
-  const generalFields = modal.querySelector("#bp-general-fields");
-
-  if (!form) return;
-
-  function clearRequirements() {
-    modal.querySelectorAll("input, textarea").forEach((el) => {
-      if (el.type !== "hidden") el.required = false;
-    });
-
-    const firstName = modal.querySelector('input[name="firstName"]');
-    const lastName = modal.querySelector('input[name="lastName"]');
-    if (firstName) firstName.required = true;
-    if (lastName) lastName.required = true;
-  }
-
-  function setAudienceMode(mode = "general") {
-    if (interestType) interestType.value = mode;
-
-    if (labFields) labFields.hidden = mode !== "lab";
-    if (investorFields) investorFields.hidden = mode !== "investor";
-    if (generalFields) generalFields.hidden = mode !== "general";
-
-    clearRequirements();
-
-    if (title && copy) {
-      if (mode === "lab") {
-        title.textContent = "For Labs";
-        copy.textContent =
-            "Tell us who you are, where you work, and how you’d want to use BioPulse in your biomechanics lab.";
-
-        const org = modal.querySelector('input[name="labOrganization"]');
-        const role = modal.querySelector('input[name="labRole"]');
-        const email = modal.querySelector('input[name="labEmail"]');
-
-        if (org) org.required = true;
-        if (role) role.required = true;
-        if (email) email.required = true;
-      } else if (mode === "investor") {
-        title.textContent = "For Investors";
-        copy.textContent =
-            "Share your contact information and our team will follow up with you.";
-
-        const name = modal.querySelector('input[name="investorName"]');
-        const email = modal.querySelector('input[name="investorEmail"]');
-
-        if (name) name.required = true;
-        if (email) email.required = true;
-      } else {
-        title.textContent = "Partner With BioPulse";
-        copy.textContent =
-            "Tell us a bit about your interest and our team will reach out shortly.";
-
-        const email = modal.querySelector('input[name="generalEmail"]');
-        if (email) email.required = true;
-      }
-    }
-  }
-
-  function openModal(mode = "general") {
-    setAudienceMode(mode);
+  function openModal() {
     modal.classList.add("active");
     modal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
@@ -491,15 +82,17 @@ function initTalkModal() {
 
   openers.forEach((btn) => {
     btn.addEventListener("click", () => {
-      const mode = btn.getAttribute("data-interest") || "general";
       document.querySelectorAll(".bp-header-menuWrap").forEach((wrap) => {
         wrap.classList.remove("open");
+
         const trigger = wrap.querySelector(".bp-partner-trigger");
         const menu = wrap.querySelector(".bp-partner-menu");
+
         if (trigger) trigger.setAttribute("aria-expanded", "false");
         if (menu) menu.setAttribute("aria-hidden", "true");
       });
-      openModal(mode);
+
+      openModal();
     });
   });
 
@@ -511,31 +104,206 @@ function initTalkModal() {
       closeModal();
     }
   });
+}
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+// Formspree routing
+function initPartnerFormspree() {
+  const form = document.getElementById("bp-talk-form");
+  const interestInput = document.getElementById("bp-interest-type");
+  const title = document.getElementById("bp-talk-title");
+  const copy = document.getElementById("bp-talk-copy");
 
-    const mode = interestType ? interestType.value : "general";
+  const labFields = document.getElementById("bp-lab-fields");
+  const investorFields = document.getElementById("bp-investor-fields");
+  const generalFields = document.getElementById("bp-general-fields");
 
-    if (window.bpToast) {
-      if (mode === "lab") {
-        window.bpToast("Thanks — we’ll reach out about BioPulse for your lab.");
-      } else if (mode === "investor") {
-        window.bpToast("Thanks — our team will follow up with you shortly.");
-      } else {
-        window.bpToast("We’ll be in touch shortly.");
+  if (!form || !interestInput || !labFields || !investorFields || !generalFields) return;
+
+  const endpoints = {
+    lab: "https://formspree.io/f/xjgjdgjv",
+    investor: "https://formspree.io/f/mdayvayk",
+    general: "https://formspree.io/f/xjgjdgjv",
+  };
+
+  function clearRequirements() {
+    form.querySelectorAll("input, textarea").forEach((el) => {
+      if (el.type !== "hidden") el.required = false;
+    });
+
+    const firstName = form.querySelector('input[name="firstName"]');
+    const lastName = form.querySelector('input[name="lastName"]');
+
+    if (firstName) firstName.required = true;
+    if (lastName) lastName.required = true;
+  }
+
+  function switchForm(type = "general") {
+    labFields.hidden = type !== "lab";
+    investorFields.hidden = type !== "investor";
+    generalFields.hidden = type !== "general";
+
+    interestInput.value = type;
+    form.action = endpoints[type] || endpoints.general;
+    form.method = "POST";
+
+    clearRequirements();
+
+    if (type === "lab") {
+      if (title) title.textContent = "Partner With BioPulse — Labs";
+      if (copy) {
+        copy.textContent =
+            "Tell us who you are, where you work, and how you’d want to use BioPulse in your biomechanics lab.";
       }
-    }
 
-    form.reset();
-    setAudienceMode("general");
-    closeModal();
+      const org = form.querySelector('input[name="labOrganization"]');
+      const role = form.querySelector('input[name="labRole"]');
+      const email = form.querySelector('input[name="labEmail"]');
+
+      if (org) org.required = true;
+      if (role) role.required = true;
+      if (email) email.required = true;
+    } else if (type === "investor") {
+      if (title) title.textContent = "Partner With BioPulse — Investors";
+      if (copy) copy.textContent = "Share your contact information and our team will follow up with you.";
+
+      const name = form.querySelector('input[name="investorName"]');
+      const email = form.querySelector('input[name="investorEmail"]');
+
+      if (name) name.required = true;
+      if (email) email.required = true;
+    } else {
+      if (title) title.textContent = "Partner With BioPulse";
+      if (copy) copy.textContent = "Tell us a bit about your interest and our team will reach out shortly.";
+
+      const email = form.querySelector('input[name="generalEmail"]');
+      if (email) email.required = true;
+    }
+  }
+
+  document.querySelectorAll("[data-interest]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      switchForm(btn.dataset.interest || "general");
+    });
   });
 
-  setAudienceMode("general");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const type = interestInput.value || "general";
+    const endpoint = endpoints[type] || endpoints.general;
+
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (res.ok) {
+        // SUCCESS UI
+        if (window.bpToast) {
+          window.bpToast("We’ll reach out to you shortly.");
+        }
+
+        form.reset();
+
+        // reset to default state
+        switchForm("general");
+
+        // close modal
+        const modal = document.getElementById("bp-talk-modal");
+        if (modal) {
+          modal.classList.remove("active");
+          modal.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = "";
+        }
+      } else {
+        throw new Error("Submission failed");
+      }
+    } catch (err) {
+      if (window.bpToast) {
+        window.bpToast("Something went wrong. Please try again.");
+      }
+    }
+  });
+
+  switchForm("general");
 }
-// Applications v2 — rail-controlled panel + optional auto-cycle
-(function () {
+
+// BioPulse Application tabs
+function initBioPulseAppTabs() {
+  const section = document.querySelector("#application");
+  if (!section) return;
+
+  const tabs = section.querySelectorAll(".bp-app-tab");
+  const panels = section.querySelectorAll(".bp-app-panel");
+
+  if (!tabs.length || !panels.length) return;
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const target = tab.dataset.tab;
+      if (!target) return;
+
+      tabs.forEach((t) => t.classList.remove("active"));
+      panels.forEach((p) => p.classList.remove("active"));
+
+      tab.classList.add("active");
+
+      const activePanel = section.querySelector(`[data-panel="${target}"]`);
+      if (activePanel) activePanel.classList.add("active");
+    });
+  });
+}
+
+// Intro curtain
+function initIntroCurtain() {
+  const intro = document.querySelector(".bp-intro");
+  if (!intro) return;
+
+  const removeIntro = () => {
+    if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
+  };
+
+  intro.addEventListener("animationend", removeIntro, { once: true });
+  window.setTimeout(removeIntro, 2600);
+}
+
+// Hero video autoplay
+function initHeroVideoAutoplay() {
+  const videos = document.querySelectorAll(".bp-hero-video");
+  if (!videos.length) return;
+
+  videos.forEach((v) => {
+    v.removeAttribute("controls");
+
+    v.muted = true;
+    v.defaultMuted = true;
+    v.loop = true;
+    v.playsInline = true;
+
+    v.setAttribute("muted", "");
+    v.setAttribute("playsinline", "");
+    v.setAttribute("autoplay", "");
+    v.setAttribute("loop", "");
+
+    const tryPlay = () => {
+      const p = v.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+    };
+
+    tryPlay();
+    v.addEventListener("loadedmetadata", tryPlay, { once: true });
+    v.addEventListener("canplay", tryPlay, { once: true });
+  });
+}
+
+// Applications section tabs / rail
+function initApplicationsRail() {
   const root = document.querySelector(".bp-apps2");
   if (!root) return;
 
@@ -543,40 +311,50 @@ function initTalkModal() {
   const panes = Array.from(root.querySelectorAll(".bp-apps2-pane"));
   const panel = root.querySelector(".bp-apps2-panel");
 
+  if (!tabs.length || !panes.length) return;
+
   function setActive(key) {
     tabs.forEach((t) => {
       const on = t.dataset.app === key;
       t.classList.toggle("is-active", on);
       t.setAttribute("aria-selected", on ? "true" : "false");
     });
-    panes.forEach((p) => p.classList.toggle("is-active", p.dataset.pane === key));
 
-    // tiny “refresh” nudge to make it feel dynamic
+    panes.forEach((p) => {
+      p.classList.toggle("is-active", p.dataset.pane === key);
+    });
+
     if (panel) {
       panel.style.transform = "translateY(-1px)";
-      setTimeout(() => (panel.style.transform = ""), 120);
+      setTimeout(() => {
+        panel.style.transform = "";
+      }, 120);
     }
   }
 
-  tabs.forEach((t) => t.addEventListener("click", () => setActive(t.dataset.app)));
+  tabs.forEach((t) => {
+    t.addEventListener("click", () => setActive(t.dataset.app));
+  });
 
-  // Optional: auto-cycle only while in view (keeps it from feeling static)
   let idx = 0;
   let timer = null;
-
   const keys = tabs.map((t) => t.dataset.app);
-  const start = () => {
-    if (timer) return;
+
+  function start() {
+    if (timer || !keys.length) return;
+
     timer = setInterval(() => {
       idx = (idx + 1) % keys.length;
       setActive(keys[idx]);
     }, 5200);
-  };
-  const stop = () => {
+  }
+
+  function stop() {
     if (!timer) return;
+
     clearInterval(timer);
     timer = null;
-  };
+  }
 
   const io = new IntersectionObserver(
       (entries) => {
@@ -587,70 +365,61 @@ function initTalkModal() {
 
   io.observe(root);
 
-  // Pause auto-cycle if user is interacting
   root.addEventListener("mouseenter", stop);
   root.addEventListener("mouseleave", start);
-})();
+}
 
-function initBioPulseAppTabs() {
-  const section = document.querySelector("#application");
-  if (!section) return;
+// Basic accordions
+function initAccordions() {
+  const items = document.querySelectorAll(".bp-accordion-item");
+  if (!items.length) return;
 
-  const tabs = section.querySelectorAll(".bp-app-tab");
-  const panels = section.querySelectorAll("[data-app-panel]");
+  items.forEach((item) => {
+    const header = item.querySelector(".bp-accordion-header");
+    if (!header) return;
 
-  if (!tabs.length || !panels.length) return;
-
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      const target = tab.dataset.appTab;
-
-      tabs.forEach((t) => {
-        t.classList.remove("active");
-        t.setAttribute("aria-selected", "false");
-      });
-
-      panels.forEach((panel) => {
-        panel.classList.remove("active");
-      });
-
-      tab.classList.add("active");
-      tab.setAttribute("aria-selected", "true");
-
-      const activePanel = section.querySelector(`[data-app-panel="${target}"]`);
-      if (activePanel) activePanel.classList.add("active");
+    header.addEventListener("click", () => {
+      item.classList.toggle("active");
     });
   });
 }
 
-document.querySelectorAll(".bp-app-tab").forEach(tab => {
-  tab.addEventListener("click", () => {
-    const target = tab.dataset.tab;
+// Basic tabs, if used elsewhere
+function initTabs() {
+  const tabs = document.querySelectorAll(".bp-tab");
+  const panels = document.querySelectorAll(".bp-tab-panel");
+  if (!tabs.length || !panels.length) return;
 
-    document.querySelectorAll(".bp-app-tab").forEach(t => t.classList.remove("active"));
-    document.querySelectorAll(".bp-app-panel").forEach(p => p.classList.remove("active"));
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const target = tab.dataset.tab;
+      if (!target) return;
 
-    tab.classList.add("active");
-    document.querySelector(`[data-panel="${target}"]`).classList.add("active");
+      tabs.forEach((t) => t.classList.remove("active"));
+      panels.forEach((p) => p.classList.remove("active"));
+
+      tab.classList.add("active");
+
+      const panelById = document.getElementById(target);
+      const panelByData = document.querySelector(`.bp-tab-panel[data-panel="${target}"]`);
+      const panel = panelById || panelByData;
+
+      if (panel) panel.classList.add("active");
+    });
   });
-});
+}
 
-/* ------------------------------------------------------
-   Init
------------------------------------------------------- */
+// Init
 document.addEventListener("DOMContentLoaded", () => {
   if (window.AOS) window.AOS.init({ duration: 800, once: true });
 
   initIntroCurtain();
-  initMobileMenu();
   initPartnerMenu();
   initTalkModal();
+  initPartnerFormspree();
+  initBioPulseAppTabs();
+  initHeroVideoAutoplay();
+  initApplicationsRail();
   initAccordions();
   initTabs();
-  initForms();
-  initHeroWave();
-  initHeroVideoAutoplay();
-  initOverviewConstellation();
-  initHowItWorksMuscleMap();
-  initBioPulseAppTabs();
 });
